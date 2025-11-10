@@ -1,65 +1,76 @@
-import Image from "next/image";
+import { auth } from '@clerk/nextjs/server';
+import { NextResponse } from 'next/server';
 
-export default function Home() {
+// function to get things from backend
+async function getDataFromBackend(token: string | null) {
+  // if we dont have a token err
+  if (!token) {
+    throw new Error('No token!');
+  }
+
+  // in future has 2 change, prob hosted on vercel
+  const API_URL = 'http://localhost:3000/api/classes';
+
+  console.log(`[Frontend Server]  ${API_URL}`);
+
+  try {
+    const res = await fetch(API_URL, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      // cache: 'no-store' always fresh data
+      cache: 'no-store',
+    });
+
+    if (!res.ok) {
+      const errorData = await res.text();
+      console.error(`[Backend API] Backend error: ${res.status}`, errorData);
+      throw new Error(`API backend error: ${res.status} - ${errorData}`);
+    }
+
+    // if all ok
+    return res.json();
+  } catch (error) {
+    console.error('[Frontend Server] fetching issue:', error);
+    return null; // if issue we return null
+  }
+}
+
+// main page component
+
+export default async function StronaGlowna() {
+  // we get the authentication object, has 2 be awaites
+  const authObject = await auth();
+
+  // double-check if were logged in (we should be bcs middleware is working but is a double-check)
+  if (!authObject.userId) {
+    return NextResponse.redirect('/sign-in');
+    // return <div>You are not logged in</div>;
+  }
+
+  // we're logged in, we getting the token
+  // token is created based on a user session
+  const token = await authObject.getToken();
+
+  // we use our function to get the data
+  const myClasses = await getDataFromBackend(token);
+
+  // we render the data
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+    <div>
+      <h1>Classes</h1>
+      <p>
+        Data from <strong>{`http://localhost:3000/api/classes`}</strong>:
+      </p>
+
+      {myClasses ? (
+        // Data as JSON
+        <pre>{JSON.stringify(myClasses, null, 2)}</pre>
+      ) : (
+        // if issue
+        <p style={{ color: 'red' }}>Data couldnt be fetched, check server</p>
+      )}
     </div>
   );
 }

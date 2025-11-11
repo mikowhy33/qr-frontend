@@ -1,9 +1,17 @@
-
 // table of these kind of objects
-export type classInfo={
-  
-  name:string,
-  description:string,
-  
+export type classInfo = {
+  id: string;
+  name: string;
+  description: string;
+}[];
 
+export type lessonInfo = {
+  id: string;
+  classId: string;
+  topic: string;
+  date: string;
+  startTime: string;
+  endTime: string;
+  createdAt: string;
+  updatedAt: string;
 }[];

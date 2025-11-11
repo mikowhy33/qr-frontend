@@ -1,4 +1,4 @@
-import { auth } from '@clerk/nextjs/server';
+
 import { NextRequest, NextResponse } from 'next/server';
 
 // function to get things from backend
@@ -20,6 +20,7 @@ export async function GET(request:NextRequest) {
     const API_URL = 'http://localhost:3000/api/classes';
 
     console.log(`[Frontend Server]  ${API_URL}`);
+    
     const res = await fetch(API_URL, {
       method: 'GET',
       headers: {
@@ -39,6 +40,7 @@ export async function GET(request:NextRequest) {
 
     // we filter to return only id and name!
     const filtered=data.map((c: any) => ({
+      id:c.id,
       name: c.name,
       description: c.description,
     }));

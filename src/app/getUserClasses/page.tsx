@@ -1,9 +1,9 @@
 import { auth } from '@clerk/nextjs/server';
-import { NextResponse } from 'next/server';
 import { getAllClassesId } from '../get_lessons_by_class/page';
 import { json } from 'stream/consumers';
 import { Card } from '@/components/ui/card';
 import { classInfo } from '@/types/classType';
+import { redirect } from 'next/navigation';
 
 async function getClasses(token: string | null) {
   if (!token) {
@@ -34,7 +34,7 @@ export default async function StronaGlowna() {
 
   // not logged in no access, we redirect to a sign in page
   if (!authObject.userId) {
-    return NextResponse.redirect('/sign-in');
+    return redirect('/sign-in');
     // return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
   }
 
@@ -87,7 +87,7 @@ export default async function StronaGlowna() {
                 className="w-full max-w-sm flex flex-col items-center text-center m-2 p-2 cursor-pointer hover:scale-105 transition-transform duration-300"
               >
                 {Object.entries(class1).map(([key, value]) => (
-                  <div className='p-1'>
+                  <div key={key} className='p-1'>
                     <p key={key}>
                       <strong>{key}</strong>: {value}
                     </p>

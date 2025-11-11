@@ -1,7 +1,9 @@
 
+// table of these kind of objects
 export type classInfo={
-  name:string;
+  
+  name:string,
   description:string,
   
 
-}
+}[];

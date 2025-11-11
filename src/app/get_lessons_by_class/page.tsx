@@ -1,7 +1,12 @@
 import { auth } from '@clerk/nextjs/server';
 
 // in future dynamic
-const classId = 'class_abc123';
+let classId = 'cmhud37ns0001ezk4td8gdasc';
+
+export async function getAllClassesId(myClasses: any) {
+  classId = myClasses.map((c: any) => c.id);
+  console.log(classId); // ["cmhud37ns0001ezk4td8gdasc"]
+}
 
 async function getLessonAttendancefunc(token: string | null) {
   if (!token) {
@@ -42,7 +47,19 @@ export default async function getLessonAttendance() {
 
   const data = await getLessonAttendancefunc(token);
 
-  return <>{data}</>;
+  if (!data || !Array.isArray(data)) {
+    return <></>;
+  }
+
+  return (
+    <>
+      {data.map((item, idx) => (
+        <div key={idx}>
+          <p>{typeof item === 'string' ? item : JSON.stringify(item)}</p>
+        </div>
+      ))}
+    </>
+  );
 }
 
 /*

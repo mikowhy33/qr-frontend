@@ -3,7 +3,7 @@ import { url } from 'inspector';
 import { NextResponse } from 'next/server';
 
 // pages, where login isnt required
-const isPublicRoute = createRouteMatcher(['/sign-in(.*)', '/sign-up(.*)']);
+const isPublicRoute = createRouteMatcher(['/sign-in(.*)', '/sign-up(.*)', '/api/(.*)']);
 
 // auth info about user session, req the request that comes
 export default clerkMiddleware(async (auth, req) => {

@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
-import { ClerkProvider } from '@clerk/nextjs';
+import { ClerkProvider, SignedIn } from '@clerk/nextjs';
+import { NavBar } from '@/components/NavBar';
+import { SignOutButton } from '@clerk/nextjs';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -26,7 +28,12 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className=" flex flex-col  min-h-screen overflow-x-hidden">{children}</body>
+        <body className=" flex flex-col  min-h-screen overflow-x-hidden">
+          <SignedIn>
+            <NavBar></NavBar>
+          </SignedIn>
+          {children}
+        </body>
       </html>
     </ClerkProvider>
   );

@@ -84,10 +84,12 @@ export default async function StronaGlowna() {
           <div className="flex flex-wrap justify-center gap-8 m-4 ">
             {myClasses.map((class1, index) => (
               <Card
+                // asChild allows to take all styles and formats from Card but behaves as a link, whole card is clickable not only the link
+                asChild
                 key={index}
                 className="w-full max-w-sm flex flex-col items-center text-center m-2 p-2 cursor-pointer hover:scale-105 transition-transform duration-300"
               >
-                <Link href={`/get_lessons_by_class?classId=${class1.id}`} >
+                <Link href={`/get_lessons_by_class?classId=${class1.id}`}>
                   {Object.entries(class1).map(([key, value]) => (
                     <div key={key} className="p-1">
                       <p key={key}>

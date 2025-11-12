@@ -1,61 +1,47 @@
+import { lessonAttendanceStart } from '@/types/classType';
 import { auth } from '@clerk/nextjs/server';
 
-// in future dynamic
-const lessonId = 'les_abc123';
+type lessonType = {
+  searchParams: {
+    lessonId: string;
+  };
+};
 
-async function getDataFromBackend(token: string | null) {
-  // if no token
-  if (!token) {
-    throw new Error('no token');
+async function getDataFromBackend(token: string | null, lessonId: string) {
+  // fetch to our next.js backend
+
+  const res = await fetch(`http://localhost:3001/api/get_qr_code?lessonId=${lessonId}`, {
+    cache: 'no-store',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!res.ok) {
+    console.error('Fetch error:', await res.text());
+    return [];
   }
 
-  const apiURL = `http://localhost:3000/api/lessons/${lessonId}/attendance/start`;
+  const data: lessonAttendanceStart = await res.json();
 
-  try {
-    const res = await fetch(apiURL, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      // always fresh data
-      cache: 'no-store',
-    });
-
-    // if response isnt fine we give an error
-    if (!res.ok) {
-      let errData;
-      try {
-        errData = await res.json();
-      } catch {
-        errData = await res.text();
-      }
-      console.error('Backend error:', res.status, errData);
-      return null; 
-    }
-
-    // if res ok we return it
-    return res.json();
-  } catch (e) {
-    console.log(`ERROR WITH FETCHNG! ${e}`);
-    return null;
-  }
+  return data;
 }
 
-export default async function StronaGlowna() {
+export default async function StronaGlowna({ searchParams }: lessonType) {
+  const { lessonId } = await searchParams;
+
   // we got our authObj
   const authObj = await auth();
 
   const userToken = await authObj.getToken();
 
+  const myClasses = await getDataFromBackend(userToken, lessonId);
+
   // console.log(userToken)
-
-  const myClasses = await getDataFromBackend(userToken);
-
+  // console.log(lessonId)
   return (
     <>
-      <div>
-        {myClasses ? <pre>{JSON.stringify(myClasses, null, 2)}</pre> : <p style={{ color: 'red' }}>Couldnt get the QR token</p>}
-      </div>
+      <div>{myClasses ? <pre>{JSON.stringify(myClasses, null, 2)}</pre> : <p style={{ color: 'red' }}>Couldnt get the QR token</p>}</div>
     </>
   );
 }

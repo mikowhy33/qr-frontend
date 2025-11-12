@@ -15,3 +15,10 @@ export type lessonInfo = {
   createdAt: string;
   updatedAt: string;
 }[];
+
+
+
+export type lessonAttendanceStart={
+  token:string,
+  expiresAt:string
+}

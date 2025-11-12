@@ -1,6 +1,7 @@
 import { Card } from '@/components/ui/card';
 import { lessonInfo } from '@/types/classType';
 import { auth } from '@clerk/nextjs/server';
+import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
 // in future dynamic
@@ -11,9 +12,10 @@ export async function getAllClassesId(myClasses: any) {
   console.log(classId); // ["cmhud37ns0001ezk4td8gdasc"]
 }
 
+// getting the data from real database!
 async function getLessonAttendancefunc(token: string | null, classId: string) {
   // no token no ride
-  if (!token || classId==undefined) {
+  if (!token || classId == undefined) {
     throw new Error('No token has been aquired');
   }
 
@@ -34,6 +36,7 @@ async function getLessonAttendancefunc(token: string | null, classId: string) {
   return data;
 }
 
+
 export default async function getLessonAttendance({ searchParams }: { searchParams: { classId: string } }) {
   const { classId } = await searchParams;
 
@@ -46,6 +49,9 @@ export default async function getLessonAttendance({ searchParams }: { searchPara
     // return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
   }
 
+
+
+  
   const token = await authObject.getToken();
 
   const myLessons: lessonInfo = await getLessonAttendancefunc(token, classId);
@@ -74,16 +80,21 @@ export default async function getLessonAttendance({ searchParams }: { searchPara
           <div className="flex flex-wrap justify-center gap-8 m-4 ">
             {myLessons.map((lesson, index) => (
               <Card
+                // asChild allows to take all styles and formats from Card but behaves as a link, whole card is clickable not only the link
+                asChild
                 key={index}
                 className="w-full max-w-sm flex flex-col items-center text-center m-2 p-2 cursor-pointer hover:scale-105 transition-transform duration-300"
               >
-                {Object.entries(lesson).map(([key, value]) => (
-                  <div key={key} className="p-1">
-                    <p key={key}>
-                      <strong>{key}</strong>: {value}
-                    </p>
-                  </div>
-                ))}
+                {/* we pass the lesson id, for which the qr code shall be generated */}
+                <Link href={`/generate_qr?lessonId=${lesson.id}`}>
+                  {Object.entries(lesson).map(([key, value]) => (
+                    <div key={key} className="p-1">
+                      <p key={key}>
+                        <strong>{key}</strong>: {value}
+                      </p>
+                    </div>
+                  ))}
+                </Link>
                 {/* <p key={index}>{lesson.id}</p> */}
               </Card>
             ))}

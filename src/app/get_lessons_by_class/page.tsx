@@ -11,13 +11,13 @@ export async function getAllClassesId(myClasses: any) {
   console.log(classId); // ["cmhud37ns0001ezk4td8gdasc"]
 }
 
-async function getLessonAttendancefunc(token: string | null) {
+async function getLessonAttendancefunc(token: string | null, classId: string) {
   // no token no ride
-  if (!token) {
+  if (!token || classId==undefined) {
     throw new Error('No token has been aquired');
   }
 
-  const res = await fetch('http://localhost:3001/api/get_lessons', {
+  const res = await fetch(`http://localhost:3001/api/get_lessons?classId=${classId}`, {
     cache: 'no-store',
     headers: {
       Authorization: `Bearer ${token}`,
@@ -34,7 +34,9 @@ async function getLessonAttendancefunc(token: string | null) {
   return data;
 }
 
-export default async function getLessonAttendance() {
+export default async function getLessonAttendance({ searchParams }: { searchParams: { classId: string } }) {
+  const { classId } = await searchParams;
+
   // we get the authentication object, has 2 be awaited
   const authObject = await auth();
 
@@ -46,16 +48,14 @@ export default async function getLessonAttendance() {
 
   const token = await authObject.getToken();
 
-  const myLessons: lessonInfo = await getLessonAttendancefunc(token);
-  console.log(myLessons);
+  const myLessons: lessonInfo = await getLessonAttendancefunc(token, classId);
+  // console.log(myLessons);
 
   return (
     <>
-     
       {myLessons ? (
         <>
-
-        {/* Object.entries to make from a obj a table of little tables [key]:value
+          {/* Object.entries to make from a obj a table of little tables [key]:value
           
           ex:
           const user = 

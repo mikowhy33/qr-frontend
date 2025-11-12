@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 // in future dynamic
-let classId = 'cmhud37ns0001ezk4td8gdasc';
+// let classId = 'cmhud37ns0001ezk4td8gdasc';
 
 export async function GET(request: NextRequest) {
   try {
@@ -22,6 +22,13 @@ export async function GET(request: NextRequest) {
 
     */
     const token = authHeader?.split(' ')[1];
+
+
+    const classId=request.nextUrl.searchParams.get('classId')
+    
+
+    console.log(classId)
+    // const classId=
 
     const apiURL = `http://localhost:3000/api/classes/${classId}/lessons`;
 

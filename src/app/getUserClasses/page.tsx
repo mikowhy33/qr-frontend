@@ -4,6 +4,7 @@ import { json } from 'stream/consumers';
 import { Card } from '@/components/ui/card';
 import { classInfo } from '@/types/classType';
 import { redirect } from 'next/navigation';
+import Link from 'next/link';
 
 async function getClasses(token: string | null) {
   if (!token) {
@@ -86,13 +87,15 @@ export default async function StronaGlowna() {
                 key={index}
                 className="w-full max-w-sm flex flex-col items-center text-center m-2 p-2 cursor-pointer hover:scale-105 transition-transform duration-300"
               >
-                {Object.entries(class1).map(([key, value]) => (
-                  <div key={key} className='p-1'>
-                    <p key={key}>
-                      <strong>{key}</strong>: {value}
-                    </p>
-                  </div>
-                ))}
+                <Link href={`/get_lessons_by_class?classId=${class1.id}`} >
+                  {Object.entries(class1).map(([key, value]) => (
+                    <div key={key} className="p-1">
+                      <p key={key}>
+                        <strong>{key}</strong>: {value}
+                      </p>
+                    </div>
+                  ))}
+                </Link>
               </Card>
             ))}
           </div>

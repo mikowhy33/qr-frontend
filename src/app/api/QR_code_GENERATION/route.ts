@@ -18,4 +18,3 @@ export async function GET(request: NextRequest) {
     //  we return it as a json!
 	return Response.json({ qr });
 }
-

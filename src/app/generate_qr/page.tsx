@@ -51,6 +51,7 @@ export default async function StronaGlowna({ searchParams }: lessonType) {
   const lessonToken = infoAboutQrCode?.token;
   const expirationDate=infoAboutQrCode?.expiresAt;
 
+  
   // qr code generated based on the token we got for the lesson
   // MOVED TO A COMPONENT IN A WHILE!
   const qrGenerated = await getQRCode(lessonToken??null);
@@ -65,7 +66,7 @@ export default async function StronaGlowna({ searchParams }: lessonType) {
         <img src={qrGenerated.qr}></img>
       </div>
 
-      <OneLessonPage lessonToken={lessonToken} expirationDate={expirationDate}></OneLessonPage>
+      <OneLessonPage lessonToken={lessonToken} expirationDate={expirationDate} lessonId={lessonId}></OneLessonPage>
     </>
   );
 }

@@ -116,7 +116,7 @@ export const OneLessonPage = (params: any) => {
   console.log(QRGenerated);
   return (
     <>
-      (
+      
       <div className=" flex flex-col items-center justify-center ">
         <button onClick={() => generateNewSession()}>Click me</button>
         {viewInfo==false?null:<p>You can reset the QR code after the time ends!</p>}
@@ -133,7 +133,7 @@ export const OneLessonPage = (params: any) => {
         <p>{MinutesLeft}</p>
         {secondsLeft != 0 || firstRender == true ? secondsLeft : <p>Time has ended</p>}
       </div>
-      )
+      
     </>
   );
 };

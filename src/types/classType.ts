@@ -16,9 +16,14 @@ export type lessonInfo = {
   updatedAt: string;
 }[];
 
+export type lessonAttendanceStart = {
+  token: string;
+  expiresAt: Date;
+};
 
-
-export type lessonAttendanceStart={
-  token:string,
-  expiresAt:Date
-}
+export type userInfo = {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+};

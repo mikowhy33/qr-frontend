@@ -1,16 +1,10 @@
 import { Card } from '@/components/ui/card';
-import { lessonInfo } from '@/types/classType';
+import { lessonInfo, userInfo } from '@/types/classType';
 import { auth } from '@clerk/nextjs/server';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
 // in future dynamic
-let classId = 'cmhud37ns0001ezk4td8gdasc';
-
-export async function getAllClassesId(myClasses: any) {
-  classId = myClasses.map((c: any) => c.id);
-  console.log(classId); // ["cmhud37ns0001ezk4td8gdasc"]
-}
 
 // getting the data from real database!
 async function getLessonAttendancefunc(token: string | null, classId: string) {
@@ -36,6 +30,13 @@ async function getLessonAttendancefunc(token: string | null, classId: string) {
   return data;
 }
 
+async function getUserRole(token: string | null) {
+  const res = await fetch(`http://localhost:3001/api/get_User_Role?userToken=${token}`);
+
+  const data = await res.json();
+
+  return data;
+}
 
 export default async function getLessonAttendance({ searchParams }: { searchParams: { classId: string } }) {
   const { classId } = await searchParams;
@@ -49,17 +50,20 @@ export default async function getLessonAttendance({ searchParams }: { searchPara
     // return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
   }
 
-
-
-  
   const token = await authObject.getToken();
 
   const myLessons: lessonInfo = await getLessonAttendancefunc(token, classId);
+
+  const userRole: userInfo = await getUserRole(token);
+
+  // Zamiast '+' użyj ','
+  console.log('Moja rola:', userRole, 'CSDCSC');
   // console.log(myLessons);
 
   return (
     <>
-      {myLessons ? (
+     
+      {userRole.role == 'teacher' && myLessons ? (
         <>
           {/* Object.entries to make from a obj a table of little tables [key]:value
           
@@ -101,7 +105,30 @@ export default async function getLessonAttendance({ searchParams }: { searchPara
           </div>
         </>
       ) : (
-        <p className="text-red-500">YOU HAVE NO LESSONS IN THIS CLASS</p>
+
+        // IN FUTURE HERE LINK TO TAKE TO SCAN ATTENDANCE TO A SPECIFIC LESSON!
+        <>
+          <div className="flex flex-wrap justify-center gap-8 m-4 ">
+            {myLessons.map((lesson, index) => (
+              <Card
+                key={index}
+                className="w-full max-w-sm flex flex-col items-center text-center m-2 p-2 cursor-pointer hover:scale-105 transition-transform duration-300"
+              >
+                {/* we pass the lesson id, for which the qr code shall be generated */}
+
+                {Object.entries(lesson).map(([key, value]) => (
+                  <div key={key} className="p-1">
+                    <p key={key}>
+                      <strong>{key}</strong>: {value}
+                    </p>
+                  </div>
+                ))}
+
+                {/* <p key={index}>{lesson.id}</p> */}
+              </Card>
+            ))}
+          </div>
+        </>
       )}
     </>
   );

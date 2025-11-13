@@ -1,5 +1,4 @@
 import { auth } from '@clerk/nextjs/server';
-import { getAllClassesId } from '../get_lessons_by_class/page';
 import { json } from 'stream/consumers';
 import { Card } from '@/components/ui/card';
 import { classInfo } from '@/types/classType';

@@ -28,6 +28,7 @@ async function getQRCode(token: string | null) {
     cache: 'no-store',
   });
 
+  // we receive the qr code
   const data = await res.json();
 
   return data;
@@ -37,41 +38,36 @@ export const OneLessonPage = (params: any) => {
   // const lessonToken = params.lessonToken;
   // const expirationDate = params.expirationDate;
 
-  const [testSPY, setSPY] = useState<any>('');
+  const [infoAboutAttendanceSession, setinfoAboutAttendanceSession] = useState<any>('');
   const [QRGenerated, setQRGenerated] = useState<any>('');
 
+  // lesson we are currently on
   const lessonId = params.lessonId;
 
   const { getToken } = useAuth();
 
-  const generateMEEEDIC = async () => {
+  const generateNewSession = async () => {
     const userToken = await getToken();
 
     const infoAboutQrCode = await getDataFromBackend(userToken, lessonId);
 
     const QRCODE = await getQRCode(infoAboutQrCode?.token ?? null);
-    setSPY(infoAboutQrCode);
+    setinfoAboutAttendanceSession(infoAboutQrCode);
     setQRGenerated(QRCODE);
   };
 
   console.log(QRGenerated);
   return (
     <>
-      <p style={{ color: 'red' }}>Nie udało się załadować kodu QR.</p>
-
-      {/* <div>{lessonToken}</div>
-      <div>{expirationDate}</div>
-
-      <button onClick={() => getQRCode(lessonToken)}>Click me</button> */}
-
-      {/* <img src={QRGenerated.qr} className="w-[300px] h-[300px]"></img> */}
-
-      <div>BZBZBZBZZB</div>
-      <button onClick={() => generateMEEEDIC()}>Click me</button>
-      {testSPY ? <pre>{JSON.stringify(testSPY, null, 2)}</pre> : <p style={{ color: 'red' }}>Couldnt get the QR token</p>}
-
-      <div className=' flex align-center justify-center'>
+      <div className=" flex flex-col items-center justify-center ">
+        <button onClick={() => generateNewSession()}>Click me</button>
+        {infoAboutAttendanceSession ? (
+          <p>{JSON.stringify(infoAboutAttendanceSession, null, 2)}</p>
+        ) : (
+          <p style={{ color: 'red' }}>You haven't generated the qr code yet</p>
+        )}
         <img src={QRGenerated.qr} className=" w-[300px] h-[300px]"></img>
+
       </div>
     </>
   );

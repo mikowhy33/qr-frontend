@@ -20,5 +20,5 @@ export type lessonInfo = {
 
 export type lessonAttendanceStart={
   token:string,
-  expiresAt:string
+  expiresAt:Date
 }

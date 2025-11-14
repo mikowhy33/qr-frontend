@@ -1,15 +1,18 @@
 'use client'; // To musi być komponent kliencki
 
 import { useEffect, useRef } from 'react';
-import { Html5QrcodeScanner } from 'html5-qrcode'; // Importuj bibliotekę
+import { Html5QrcodeScanner } from 'html5-qrcode';
 
-// Nasz komponent przyjmuje dwie funkcje zwrotne (callbacks)
+
+// NOTE IN STRCIT MODE THIS WILL RENDER TWICE, THERE IS NOTHING WE CAN DO ABOUT IT
+// ITS THE LIBRARY ISSUE NOT OURS, IN BUILD MODE IT WILL WORK JUST FINE!
+
+
 type Props = {
   onScanSuccess: (decodedText: string) => void;
   onScanError: (errorMessage: string) => void;
 };
 
-// To jest ten "Scanner" z UI, o którym rozmawialiśmy
 export const QrScanner = ({ onScanSuccess, onScanError }: Props) => {
   const qrcodeRegionId = 'html5qr-code-full-region';
 

@@ -1,3 +1,5 @@
+
+import AttendanceTable from '@/components/AttendanceTable';
 import { OneLessonPage } from '@/components/OneLessonPage';
 import { lessonAttendanceStart } from '@/types/classType';
 import { auth } from '@clerk/nextjs/server';
@@ -13,6 +15,7 @@ export default async function StronaGlowna({ searchParams }: lessonType) {
 
   return (
     <>
+      <AttendanceTable lessonId={lessonId}></AttendanceTable>
       <OneLessonPage lessonId={lessonId}></OneLessonPage>
     </>
   );

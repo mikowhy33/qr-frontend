@@ -28,9 +28,24 @@ export type userInfo = {
   role: string;
 };
 
+export type attendanceScan = {
+  status: string;
+  message: string;
+  lessonId: string;
+};
 
-export type attendanceScan={
-  status:string,
-  message:string,
-  lessonId:string
-}
+
+
+// One student on a list
+export type Attendee = {
+  studentId: string;
+  name: string;
+  timestamp: string;
+  status: string;
+};
+
+// whole response from the api!
+export type LessonAttendance = {
+  lessonId: string;
+  attendees: Attendee[];
+};

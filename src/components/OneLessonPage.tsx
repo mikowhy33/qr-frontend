@@ -120,7 +120,7 @@ export const OneLessonPage = (params: any) => {
     <>
       
       <div className=" flex flex-col items-center justify-center ">
-        <button onClick={() => generateNewSession()}>Click me</button>
+        <button onClick={() => generateNewSession()}>Request the QR code</button>
         {viewInfo==false?null:<p>You can reset the QR code after the time ends!</p>}
 
         {infoAboutAttendanceSession ? (

@@ -11,6 +11,7 @@ import { Html5Qrcode } from 'html5-qrcode';
 import { useState } from 'react';
 
 export default function scanQR() {
+  
   const { getToken } = useAuth();
 
   const [scanResult, setScanResult] = useState<string | null>(null);
@@ -60,9 +61,9 @@ export default function scanQR() {
       <div>brbrpatapim</div>
 
       <QrScanner onScanSuccess={handleScanSuccess} onScanError={onScanFailure}></QrScanner>
-      <div className='flex flex-col items-center'>
-      {error && <p className="text-red-500">Error: {error}</p>}
-      {scanResult && <p className="text-green-500">{scanResult}</p>}
+      <div className="flex flex-col items-center">
+        {error && <p className="text-red-500">Error: {error}</p>}
+        {scanResult && <p className="text-green-500">{scanResult}</p>}
       </div>
     </>
   );

@@ -62,7 +62,6 @@ export default async function getLessonAttendance({ searchParams }: { searchPara
 
   return (
     <>
-     
       {userRole.role == 'teacher' && myLessons ? (
         <>
           {/* Object.entries to make from a obj a table of little tables [key]:value
@@ -105,24 +104,25 @@ export default async function getLessonAttendance({ searchParams }: { searchPara
           </div>
         </>
       ) : (
-
         // IN FUTURE HERE LINK TO TAKE TO SCAN ATTENDANCE TO A SPECIFIC LESSON!
         <>
           <div className="flex flex-wrap justify-center gap-8 m-4 ">
             {myLessons.map((lesson, index) => (
               <Card
+                asChild
                 key={index}
                 className="w-full max-w-sm flex flex-col items-center text-center m-2 p-2 cursor-pointer hover:scale-105 transition-transform duration-300"
               >
                 {/* we pass the lesson id, for which the qr code shall be generated */}
-
-                {Object.entries(lesson).map(([key, value]) => (
-                  <div key={key} className="p-1">
-                    <p key={key}>
-                      <strong>{key}</strong>: {value}
-                    </p>
-                  </div>
-                ))}
+                <Link href={`/scan_qr`}>
+                  {Object.entries(lesson).map(([key, value]) => (
+                    <div key={key} className="p-1">
+                      <p key={key}>
+                        <strong>{key}</strong>: {value}
+                      </p>
+                    </div>
+                  ))}
+                </Link>
 
                 {/* <p key={index}>{lesson.id}</p> */}
               </Card>

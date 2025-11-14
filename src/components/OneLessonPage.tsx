@@ -113,6 +113,8 @@ export const OneLessonPage = (params: any) => {
     };
   }, [timerStarted]);
 
+
+  const [testState,useTestState]=useState(0)
   console.log(QRGenerated);
   return (
     <>
@@ -133,6 +135,9 @@ export const OneLessonPage = (params: any) => {
         <p>{MinutesLeft}</p>
         {secondsLeft != 0 || firstRender == true ? secondsLeft : <p>Time has ended</p>}
       </div>
+
+      <button onClick={()=>useTestState(prev=>prev+1)}>Refresh</button>
+      <div>{testState}zz</div>
       
     </>
   );

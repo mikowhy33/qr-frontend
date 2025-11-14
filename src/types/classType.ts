@@ -27,3 +27,10 @@ export type userInfo = {
   email: string;
   role: string;
 };
+
+
+export type attendanceScan={
+  status:string,
+  message:string,
+  lessonId:string
+}

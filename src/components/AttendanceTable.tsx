@@ -18,16 +18,16 @@ export default function AttendanceTable(params: any) {
     LessonsetAttendanceInfo(dataAttendance);
   };
 
-  // button will be refreshed every 10 seconds
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     buttonRef.current.click();
-  //   }, 10000);
+  // button will be refreshed every 10 seconds!
+  useEffect(() => {
+    const interval = setInterval(() => {
+      buttonRef.current.click();
+    }, 10000);
 
-  //   return () => {
-  //     clearInterval(interval);
-  //   };
-  // }, []);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
   return (
     <>

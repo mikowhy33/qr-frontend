@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-
-
 export async function GET(request: NextRequest) {
   try {
     // we get the lessonId from searchParams
@@ -40,3 +38,29 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }
+
+// before
+
+/*
+
+
+async function getDataFromBackend(token: string | null, lessonId: string) {
+
+  // fetch the token and expiration date from our next.js backend
+  const res = await fetch(`http://localhost:3001/api/get_qr_code_info?lessonId=${lessonId}`, {
+    cache: 'no-store',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!res.ok) {
+    console.error('Fetch error:', await res.text());
+    return null;
+  }
+
+  const data: lessonAttendanceStart = await res.json();
+
+  return data;
+}
+*/

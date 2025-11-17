@@ -3,10 +3,11 @@ import QRCode from "qrcode";
 
 export async function GET(request: NextRequest) {
 
+     // from headers we get the token
+    const authHeader = request.headers.get('Authorization');
+    const token = authHeader?.split(' ')[1];
 
-    const token=request.nextUrl.searchParams.get('token')
-
-    console.log('TETETTETSTETTSTETTSTE'+token +'BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ')
+    // console.log('TETETTETSTETTSTETTSTE'+token +'BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ')
 
     //  we get the qr
 	const qr = await QRCode.toDataURL(`${token}`,{

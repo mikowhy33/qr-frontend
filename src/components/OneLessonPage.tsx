@@ -6,29 +6,14 @@ import { lessonAttendanceStart } from '@/types/classType';
 import { time } from 'console';
 import { startAttendtance } from '@/services/api';
 
-async function getDataFromBackend(token: string | null, lessonId: string) {
-
-  // fetch the token and expiration date from our next.js backend
-  const res = await fetch(`http://localhost:3001/api/get_qr_code_info?lessonId=${lessonId}`, {
+// in future fetching maybe on client!
+async function getQRCode(token: string | null) {
+  // WHILE HOSTING THIS HAS TO CHANGE!!
+  const res = await fetch(`http://localhost:3001/api/QR_code_GENERATION`, {
     cache: 'no-store',
     headers: {
       Authorization: `Bearer ${token}`,
     },
-  });
-
-  if (!res.ok) {
-    console.error('Fetch error:', await res.text());
-    return null;
-  }
-
-  const data: lessonAttendanceStart = await res.json();
-
-  return data;
-}
-
-async function getQRCode(token: string | null) {
-  const res = await fetch(`http://localhost:3001/api/QR_code_GENERATION?token=${token}`, {
-    cache: 'no-store',
   });
 
   // we receive the qr code
@@ -38,9 +23,6 @@ async function getQRCode(token: string | null) {
 }
 
 export const OneLessonPage = (params: any) => {
-
-
-  const [infoAboutAttendanceSession, setinfoAboutAttendanceSession] = useState<any>('');
   const [QRGenerated, setQRGenerated] = useState<any>('');
 
   const [expirationTime, setExpirationTime] = useState<any>(0);
@@ -52,42 +34,42 @@ export const OneLessonPage = (params: any) => {
 
   const [firstRender, setFirstRender] = useState(true);
 
-  const [viewInfo,setViewInfo]=useState(false);
+  const [viewInfo, setViewInfo] = useState(false);
 
   // lesson we are currently on
   const lessonId = params.lessonId;
 
-  const { getToken } = useAuth();
+  const [infoAboutStartOfAttendance, setinfoAboutStartOfAttendance] = useState<lessonAttendanceStart | null>();
 
-
-  const [test,setTEST]=useState<any>()
-
+  // function to generate a new QR Code!
   const generateNewSession = async () => {
-
-    if(secondsLeft!==0){
+    if (secondsLeft !== 0) {
       setViewInfo(true);
       return;
     }
-    const userToken = await getToken();
 
-    const infoAboutQrCode = await getDataFromBackend(userToken, lessonId);
+    // starting attendance func services/api
+    const QRCodeBasedInfo = await startAttendtance(lessonId);
 
-    const QRCodeBasedInfo=await startAttendtance(lessonId);
-
-    setTEST(QRCodeBasedInfo);
-
-    if (!infoAboutQrCode) {
+    
+    if (!QRCodeBasedInfo) {
       alert('Couldnt get data, try again.');
       return;
     }
-    const QRCODE2=await getQRCode(QRCodeBasedInfo?.token??null);
-    const QRCODE = await getQRCode(infoAboutQrCode?.token ?? null);
-    setinfoAboutAttendanceSession(infoAboutQrCode);
-    setQRGenerated(QRCODE2);
-    setExpirationTime(infoAboutQrCode?.expiresAt);
+
+    // now just to show it in future info abt this deleted!
+    setinfoAboutStartOfAttendance(QRCodeBasedInfo);
+
+    // were getting a blob with our qr code info
+    const QRCODE = await getQRCode(QRCodeBasedInfo?.token ?? null);
+
+    // we set the info inside a hook so that we can use it later
+    setQRGenerated(QRCODE);
+    
+    setExpirationTime(QRCodeBasedInfo?.expiresAt);
 
     // SETTING THE TIME!
-    const exp = new Date(infoAboutQrCode.expiresAt).getTime();
+    const exp = new Date(QRCodeBasedInfo.expiresAt).getTime();
 
     const now = Date.now();
 
@@ -123,22 +105,17 @@ export const OneLessonPage = (params: any) => {
     };
   }, [timerStarted]);
 
-
-  const [testState,useTestState]=useState(0)
+  const [testState, useTestState] = useState(0);
   console.log(QRGenerated);
   return (
     <>
-    <div>{JSON.stringify(test)}</div>
-      
+      <div>{JSON.stringify(infoAboutStartOfAttendance)}</div>
+
       <div className=" flex flex-col items-center justify-center ">
         <button onClick={() => generateNewSession()}>Request the QR code</button>
-        {viewInfo==false?null:<p className=' text-red-500'>You can reset the QR code after the time ends!</p>}
+        {viewInfo == false ? null : <p className=" text-red-500">You can reset the QR code after the time ends!</p>}
 
-        {test ? (
-          <p>{JSON.stringify(test, null, 2)}</p>
-        ) : (
-          <p style={{ color: 'red' }}>You haven't generated the qr code yet</p>
-        )}
+        {infoAboutStartOfAttendance ? <p>{JSON.stringify(infoAboutStartOfAttendance, null, 2)}</p> : <p style={{ color: 'red' }}>You haven't generated the qr code yet</p>}
 
         <img src={QRGenerated.qr} className=" w-[300px] h-[300px]"></img>
 
@@ -147,10 +124,8 @@ export const OneLessonPage = (params: any) => {
         {secondsLeft != 0 || firstRender == true ? secondsLeft : <p>Time has ended</p>}
       </div>
 
-      <button onClick={()=>useTestState(prev=>prev+1)}>Refresh</button>
+      <button onClick={() => useTestState((prev) => prev + 1)}>Refresh</button>
       <div>{testState}zz</div>
-      
     </>
   );
 };
-

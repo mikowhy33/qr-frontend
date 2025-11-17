@@ -55,11 +55,11 @@ export const getLessonAttendance = async (lessonId: string) => {
 
 // we start a attendance, response will be a token:'someidtoken' expirestAt:'dateasstring'
 export const startAttendtance = async (lessonId: string) => {
-  const data=await backendFetch<lessonAttendanceStart>(`/api/lessons/${lessonId}/attendance/start`, {
+  const data = await backendFetch<lessonAttendanceStart>(`/api/lessons/${lessonId}/attendance/start`, {
     method: 'POST',
   });
 
-  if(!data) return null;
+  if (!data) return null;
 
   return data;
 };

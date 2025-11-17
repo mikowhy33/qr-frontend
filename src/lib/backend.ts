@@ -1,6 +1,6 @@
 import { auth } from '@clerk/nextjs/server';
 
-// our real backend url!
+// our real backend url! IN PRODUCTION THIS HAS TO CHANGE, THIS IS OFC THE SERVER ADDRESS!
 const BACKEND_URL = 'http://localhost:3000';
 
 // generic function!

@@ -73,6 +73,7 @@ export default async function getLessonAttendance({ searchParams }: { searchPara
       ) : (
      
         <>
+         <div>{userRole.role}</div>
           <div className="flex flex-wrap justify-center gap-8 m-4 ">
             {lessons.map((lesson, index) => (
               <Card

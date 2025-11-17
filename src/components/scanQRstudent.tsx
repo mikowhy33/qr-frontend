@@ -3,10 +3,8 @@
 import { useEffect, useRef } from 'react';
 import { Html5QrcodeScanner } from 'html5-qrcode';
 
-
 // NOTE IN STRCIT MODE THIS WILL RENDER TWICE, THERE IS NOTHING WE CAN DO ABOUT IT
-// ITS THE LIBRARY ISSUE NOT OURS, IN BUILD MODE IT WILL WORK JUST FINE!
-
+// ITS THE HTML5QRCODESCANNER ISSUE NOT OURS, IN BUILD MODE IT WILL WORK JUST FINE!
 
 type Props = {
   onScanSuccess: (decodedText: string) => void;
@@ -66,6 +64,3 @@ export const QrScanner = ({ onScanSuccess, onScanError }: Props) => {
     </>
   );
 };
-
-
-

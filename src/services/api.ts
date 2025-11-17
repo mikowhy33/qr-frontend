@@ -2,7 +2,7 @@
 
 import { backendFetch } from '@/lib/backend';
 
-import { BackendClassResponse, classInfo, LessonAttendance, lessonAttendanceStart, lessonInfo, userInfo } from '@/types/classType';
+import { attendanceScan, BackendClassResponse, classInfo, LessonAttendance, lessonAttendanceStart, lessonInfo, userInfo } from '@/types/classType';
 
 // getting classes
 
@@ -63,3 +63,18 @@ export const startAttendtance = async (lessonId: string) => {
 
   return data;
 };
+
+// info abt qrToken which the teacher has created!
+export const scanAttendance=async(qrToken:string)=>{
+
+  const data=await backendFetch<attendanceScan>(`/api/attendance/scan`,{
+    method:'POST',
+    body:JSON.stringify({token:qrToken})
+  })
+
+  if(!data) return null;
+
+  return data;
+
+
+}

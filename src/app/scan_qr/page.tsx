@@ -2,6 +2,7 @@
 
 // To use Html5QrcodeScanner (more info below)
 import { QrScanner } from '@/components/scanQRstudent';
+import { scanAttendance } from '@/services/api';
 import { attendanceScan } from '@/types/classType';
 import { useAuth } from '@clerk/nextjs';
 import { Html5QrcodeScanner } from 'html5-qrcode';
@@ -11,43 +12,27 @@ import { Html5Qrcode } from 'html5-qrcode';
 import { useState } from 'react';
 
 export default function scanQR() {
-  const { getToken } = useAuth();
-
   const [scanResult, setScanResult] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  // token that has been given to us is a token from the qr!
+  // qrtoken that has been given to us in a token from the qr!
+  // we are just defining what we want to do with it
   const handleScanSuccess = async (qrToken: string) => {
     setError(null);
 
     try {
-      // we are getting a user token first
-      const userToken = await getToken();
+      // scanning from our generic func in services/api
+      const data2: attendanceScan | null = await scanAttendance(qrToken);
 
-      // console.log(userToken + 'BRBRBBR PATAPIM');
-
-      // we do a fetch to a database
-      const res = await fetch('http://localhost:3001/api/post_scan_attendance', {
-        // bcs were sending body
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${userToken}`,
-        },
-
-        body: JSON.stringify({ token: qrToken }), // Token from qr code
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.error);
+      if (!data2) {
+        throw new Error('Couldnt get the presence. Possible Server error');
       }
 
-      setScanResult(`Congratulations ${data.message} for lesson ${data.lessonId}.  ${data.status}  `);
-      return data;
+      setScanResult(`Congratulations! ${data2.message} for lesson ${data2.lessonId}  ${data2.status}  `);
+      return data2;
     } catch (err: any) {
       console.error(err);
-      setError(err.message || 'Wystąpił błąd');
+      setError(err.message || 'There has been an error');
     }
   };
 
@@ -57,7 +42,7 @@ export default function scanQR() {
 
   return (
     <>
-      <div>brbrpatapim</div>
+      <div className='mx-auto'>Please scan the qr Code to mark your attendance</div>
 
       <QrScanner onScanSuccess={handleScanSuccess} onScanError={onScanFailure}></QrScanner>
       <div className="flex flex-col items-center">

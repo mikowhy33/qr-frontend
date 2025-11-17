@@ -24,7 +24,7 @@ export const QrScanner = ({ onScanSuccess, onScanError }: Props) => {
 
     // we create an instance of the scanner
     const html5QrcodeScanner = new Html5QrcodeScanner(
-      // this is the location where it will be rendered
+      // this is the location where it will be rendered, html5qrcode does smth like getelementbyid(qrcodeRegionId)
       qrcodeRegionId,
       { fps: 10, qrbox: { width: 250, height: 250 } },
       /* verbose= */ false,

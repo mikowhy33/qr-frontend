@@ -4,6 +4,7 @@ import './globals.css';
 import { ClerkProvider, SignedIn } from '@clerk/nextjs';
 import { NavBar } from '@/components/NavBar';
 import { SignOutButton } from '@clerk/nextjs';
+import { InfoAboutUser } from '@/components/InfoAboutUser';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -31,6 +32,7 @@ export default function RootLayout({
         <body className=" flex flex-col  min-h-screen overflow-x-hidden">
           <SignedIn>
             <NavBar></NavBar>
+            <InfoAboutUser></InfoAboutUser>
           </SignedIn>
           {children}
         </body>

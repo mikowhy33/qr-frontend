@@ -1,8 +1,8 @@
-'use server'
+'use server';
 
 import { backendFetch } from '@/lib/backend';
 
-import { BackendClassResponse, classInfo, LessonAttendance, lessonInfo, userInfo } from '@/types/classType';
+import { BackendClassResponse, classInfo, LessonAttendance, lessonAttendanceStart, lessonInfo, userInfo } from '@/types/classType';
 
 // getting classes
 
@@ -43,14 +43,23 @@ export const getUserRole = async () => {
 };
 
 // based on a lessonId we get the attendance
-export const getLessonAttendance = async (lessonId:string) => {
+export const getLessonAttendance = async (lessonId: string) => {
+  const data = await backendFetch<LessonAttendance>(`/api/lessons/${lessonId}/attendance`);
 
-  const data= await backendFetch<LessonAttendance>(`/api/lessons/${lessonId}/attendance`)
+  // console.log(data + 'BZZ');
 
-  console.log(data + 'BZZ');
+  if (!data) return null;
+
+  return data;
+};
+
+// we start a attendance, response will be a token:'someidtoken' expirestAt:'dateasstring'
+export const startAttendtance = async (lessonId: string) => {
+  const data=await backendFetch<lessonAttendanceStart>(`/api/lessons/${lessonId}/attendance/start`, {
+    method: 'POST',
+  });
 
   if(!data) return null;
 
   return data;
-
 };

@@ -4,8 +4,10 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '@clerk/nextjs';
 import { lessonAttendanceStart } from '@/types/classType';
 import { time } from 'console';
+import { startAttendtance } from '@/services/api';
 
 async function getDataFromBackend(token: string | null, lessonId: string) {
+
   // fetch the token and expiration date from our next.js backend
   const res = await fetch(`http://localhost:3001/api/get_qr_code_info?lessonId=${lessonId}`, {
     cache: 'no-store',
@@ -57,6 +59,9 @@ export const OneLessonPage = (params: any) => {
 
   const { getToken } = useAuth();
 
+
+  const [test,setTEST]=useState<any>()
+
   const generateNewSession = async () => {
 
     if(secondsLeft!==0){
@@ -67,13 +72,18 @@ export const OneLessonPage = (params: any) => {
 
     const infoAboutQrCode = await getDataFromBackend(userToken, lessonId);
 
+    const QRCodeBasedInfo=await startAttendtance(lessonId);
+
+    setTEST(QRCodeBasedInfo);
+
     if (!infoAboutQrCode) {
       alert('Couldnt get data, try again.');
       return;
     }
+    const QRCODE2=await getQRCode(QRCodeBasedInfo?.token??null);
     const QRCODE = await getQRCode(infoAboutQrCode?.token ?? null);
     setinfoAboutAttendanceSession(infoAboutQrCode);
-    setQRGenerated(QRCODE);
+    setQRGenerated(QRCODE2);
     setExpirationTime(infoAboutQrCode?.expiresAt);
 
     // SETTING THE TIME!
@@ -118,13 +128,14 @@ export const OneLessonPage = (params: any) => {
   console.log(QRGenerated);
   return (
     <>
+    <div>{JSON.stringify(test)}</div>
       
       <div className=" flex flex-col items-center justify-center ">
         <button onClick={() => generateNewSession()}>Request the QR code</button>
         {viewInfo==false?null:<p className=' text-red-500'>You can reset the QR code after the time ends!</p>}
 
-        {infoAboutAttendanceSession ? (
-          <p>{JSON.stringify(infoAboutAttendanceSession, null, 2)}</p>
+        {test ? (
+          <p>{JSON.stringify(test, null, 2)}</p>
         ) : (
           <p style={{ color: 'red' }}>You haven't generated the qr code yet</p>
         )}

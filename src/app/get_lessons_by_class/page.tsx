@@ -1,68 +1,34 @@
 import { Card } from '@/components/ui/card';
+import { getLessons, getUserRole } from '@/services/api';
 import { lessonInfo, userInfo } from '@/types/classType';
 import { auth } from '@clerk/nextjs/server';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
-// in future dynamic
 
-// getting the data from real database!
-async function getLessonAttendancefunc(token: string | null, classId: string) {
-  // no token no ride
-  if (!token || classId == undefined) {
-    throw new Error('No token has been aquired');
-  }
 
-  const res = await fetch(`http://localhost:3001/api/get_lessons?classId=${classId}`, {
-    cache: 'no-store',
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
 
-  if (!res.ok) {
-    console.error('Fetch error:', await res.text());
-    return [];
-  }
-
-  const data = await res.json();
-
-  return data;
-}
-
-async function getUserRole(token: string | null) {
-  const res = await fetch(`http://localhost:3001/api/get_User_Role?userToken=${token}`);
-
-  const data = await res.json();
-
-  return data;
-}
 
 export default async function getLessonAttendance({ searchParams }: { searchParams: { classId: string } }) {
+
+
   const { classId } = await searchParams;
 
-  // we get the authentication object, has 2 be awaited
-  const authObject = await auth();
+  const lessons= await getLessons(classId);
+  
+  const userRole=await getUserRole();
 
-  // not logged in no access, we redirect to a sign in page
-  if (!authObject.userId) {
-    return redirect('/sign-in');
-    // return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
+  if(!lessons){
+    return <p>Server error...</p>;
   }
 
-  const token = await authObject.getToken();
-
-  const myLessons: lessonInfo = await getLessonAttendancefunc(token, classId);
-
-  const userRole: userInfo = await getUserRole(token);
-
-
-  console.log('Moja rola:', userRole, 'CSDCSC');
-  // console.log(myLessons);
+  if(!userRole){
+    return <p>Server error</p>
+  }
 
   return (
     <>
-      {userRole.role == 'teacher' && myLessons ? (
+      {userRole.role == 'teacher' && lessons ? (
         <>
           {/* Object.entries to make from a obj a table of little tables [key]:value
           
@@ -80,8 +46,9 @@ export default async function getLessonAttendance({ searchParams }: { searchPara
             [ "isStudent", false ]
           ]
           */}
+          <div>{userRole.role}</div>
           <div className="flex flex-wrap justify-center gap-8 m-4 ">
-            {myLessons.map((lesson, index) => (
+            {lessons.map((lesson, index) => (
               <Card
                 // asChild allows to take all styles and formats from Card but behaves as a link, whole card is clickable not only the link
                 asChild
@@ -104,10 +71,10 @@ export default async function getLessonAttendance({ searchParams }: { searchPara
           </div>
         </>
       ) : (
-        // IN FUTURE HERE LINK TO TAKE TO SCAN ATTENDANCE TO A SPECIFIC LESSON!
+     
         <>
           <div className="flex flex-wrap justify-center gap-8 m-4 ">
-            {myLessons.map((lesson, index) => (
+            {lessons.map((lesson, index) => (
               <Card
                 asChild
                 key={index}

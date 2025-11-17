@@ -8,6 +8,16 @@ export async function GET(request: NextRequest) {
     const authHeader = request.headers.get('Authorization');
 
     /*
+
+
+     const res = await fetch(`http://localhost:3001/api/get_lessons?classId=${classId}`, {
+    cache: 'no-store',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+
       authHeader is right now a string, by splitting we split the 1 and second part
       then we get into the second part: 
 

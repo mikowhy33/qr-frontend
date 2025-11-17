@@ -1,6 +1,6 @@
 import { backendFetch } from '@/lib/backend';
 
-import { BackendClassResponse, classInfo, LessonAttendance, userInfo } from '@/types/classType';
+import { BackendClassResponse, classInfo, LessonAttendance, lessonInfo, userInfo } from '@/types/classType';
 
 // getting classes
 
@@ -10,7 +10,8 @@ export const getClasses = async () => {
   if (!data) return null;
 
   // filtration, only neccesarry data
-  const filtered: classInfo[] = data?.map((c) => ({
+  // we make a new obj
+  const filtered = data.map((c) => ({
     id: c.id,
     name: c.name,
     description: c.description,
@@ -18,3 +19,29 @@ export const getClasses = async () => {
 
   return filtered;
 };
+
+
+// based on a classId we get lessons
+export const getLessons=async(classId:string)=>{
+
+  const data= await backendFetch<lessonInfo>(`/api/classes/${classId}/lessons`)
+
+  if(!data) return null;
+
+  // console.log(data)
+
+  return data;
+
+}
+
+
+
+export const getUserRole =async()=>{
+
+  const data= await backendFetch<userInfo>(`/api/users/me`)
+
+  if(!data ) return null;
+
+  return data;
+
+}

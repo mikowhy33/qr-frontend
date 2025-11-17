@@ -8,7 +8,6 @@ import { getClasses } from '@/services/api';
 
 // main component
 export default async function userClasses() {
-
   // ! a fetch for classes to services/api !
   const classes = await getClasses();
 
@@ -28,7 +27,6 @@ export default async function userClasses() {
         // Data as JSON
         <>
           <pre>{JSON.stringify(classes, null, 2)}</pre>
-          <div></div>
 
           {/* Object.entries to make from a obj a table of little tables [key]:value
           

@@ -3,7 +3,17 @@ export type classInfo = {
   id: string;
   name: string;
   description: string;
-}[];
+};
+
+export type BackendClassResponse = {
+  id: string;
+  name: string;
+  description: string;
+  // we dont want these fields from server
+  created_at?: string; 
+  teacher_id?: string;
+  is_archived?: boolean;
+};
 
 export type lessonInfo = {
   id: string;
@@ -33,8 +43,6 @@ export type attendanceScan = {
   message: string;
   lessonId: string;
 };
-
-
 
 // One student on a list
 export type Attendee = {

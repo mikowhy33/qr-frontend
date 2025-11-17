@@ -11,7 +11,6 @@ import { Html5Qrcode } from 'html5-qrcode';
 import { useState } from 'react';
 
 export default function scanQR() {
-  
   const { getToken } = useAuth();
 
   const [scanResult, setScanResult] = useState<string | null>(null);
@@ -35,7 +34,7 @@ export default function scanQR() {
           Authorization: `Bearer ${userToken}`,
         },
 
-        body: JSON.stringify({ token: qrToken }), // Token z QR kodu
+        body: JSON.stringify({ token: qrToken }), // Token from qr code
       });
 
       const data = await res.json();

@@ -27,7 +27,7 @@ export const NavBar = () => {
           <NavigationMenuItem>
             <NavigationMenuLink asChild>
               <Link href="/getUserClasses" passHref>
-                Teacher Classes
+                Classes
               </Link>
             </NavigationMenuLink>
           </NavigationMenuItem>

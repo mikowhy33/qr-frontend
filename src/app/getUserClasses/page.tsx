@@ -4,51 +4,17 @@ import { Card } from '@/components/ui/card';
 import { classInfo } from '@/types/classType';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
-
-async function getClasses(token: string | null) {
-  if (!token) {
-    console.error('You cant get classes without a token');
-    return [];
-  }
-
-  const res = await fetch('http://localhost:3001/api/get_classes', {
-    cache: 'no-store',
-    // we pass the token
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  if (!res.ok) {
-    console.error('Fetch error:', await res.text());
-    return [];
-  }
-
-  return res.json();
-}
+import { getClasses } from '@/services/api';
 
 // main component
-export default async function StronaGlowna() {
-  // we get the authentication object, has 2 be awaited
-  const authObject = await auth();
+export default async function userClasses() {
 
-  // not logged in no access, we redirect to a sign in page
-  if (!authObject.userId) {
-    return redirect('/sign-in');
-    // return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
+  // ! a fetch for classes to services/api !
+  const classes = await getClasses();
+
+  if (!classes) {
+    return <p>Server error...</p>;
   }
-
-  // we're logged in, we getting the token
-  // token is created based on a user session
-  const token = await authObject.getToken();
-
-  // if we dont have a token err
-  if (!token) {
-    throw new Error('No token!');
-  }
-
-  // function to get all classes!
-  const myClasses: classInfo = await getClasses(token);
 
   // we render the data
   return (
@@ -58,10 +24,10 @@ export default async function StronaGlowna() {
         Data from <strong>{`http://localhost:3000/api/classes`}</strong>:
       </p>
 
-      {myClasses ? (
+      {classes ? (
         // Data as JSON
         <>
-          <pre>{JSON.stringify(myClasses, null, 2)}</pre>
+          <pre>{JSON.stringify(classes, null, 2)}</pre>
           <div></div>
 
           {/* Object.entries to make from a obj a table of little tables [key]:value
@@ -81,7 +47,7 @@ export default async function StronaGlowna() {
           ]
           */}
           <div className="flex flex-wrap justify-center gap-8 m-4 ">
-            {myClasses.map((class1, index) => (
+            {classes.map((class1, index) => (
               <Card
                 // asChild allows to take all styles and formats from Card but behaves as a link, whole card is clickable not only the link
                 asChild

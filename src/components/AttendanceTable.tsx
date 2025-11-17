@@ -47,7 +47,7 @@ export default function AttendanceTable(params: any) {
   return (
     <>
       <button onClick={refreshDataAttendance} ref={buttonRef}>
-        Refresh the attendance
+        Refresh the attendance manually
       </button>
       <p>{lessonattendanceInfo?.lessonId}</p>
       <div className=" flex flex-col justify-center items-center">
@@ -56,7 +56,7 @@ export default function AttendanceTable(params: any) {
             <TableRow>
               <TableHead>ID</TableHead>
               <TableHead>Name</TableHead>
-              <TableHead>Surname</TableHead>
+              <TableHead>Present</TableHead>
               <TableHead className="text-right">Time arrived</TableHead>
             </TableRow>
           </TableHeader>

@@ -56,7 +56,7 @@ export default async function getLessonAttendance({ searchParams }: { searchPara
 
   const userRole: userInfo = await getUserRole(token);
 
-  // Zamiast '+' użyj ','
+
   console.log('Moja rola:', userRole, 'CSDCSC');
   // console.log(myLessons);
 

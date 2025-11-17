@@ -1,4 +1,3 @@
-// Plik: src/app/sign-up/[[...sign-up]]/page.tsx
 
 import { SignUp } from "@clerk/nextjs";
 

@@ -24,7 +24,7 @@ export type lessonInfo = {
   endTime: string;
   createdAt: string;
   updatedAt: string;
-}[];
+};
 
 export type lessonAttendanceStart = {
   token: string;

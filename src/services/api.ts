@@ -1,3 +1,5 @@
+'use server'
+
 import { backendFetch } from '@/lib/backend';
 
 import { BackendClassResponse, classInfo, LessonAttendance, lessonInfo, userInfo } from '@/types/classType';
@@ -20,28 +22,35 @@ export const getClasses = async () => {
   return filtered;
 };
 
-
 // based on a classId we get lessons
-export const getLessons=async(classId:string)=>{
+export const getLessons = async (classId: string) => {
+  const data = await backendFetch<lessonInfo[]>(`/api/classes/${classId}/lessons`);
 
-  const data= await backendFetch<lessonInfo>(`/api/classes/${classId}/lessons`)
-
-  if(!data) return null;
+  if (!data) return null;
 
   // console.log(data)
 
   return data;
+};
 
-}
+// geeting a userRole
+export const getUserRole = async () => {
+  const data = await backendFetch<userInfo>(`/api/users/me`);
 
+  if (!data) return null;
 
+  return data;
+};
 
-export const getUserRole =async()=>{
+// based on a lessonId we get the attendance
+export const getLessonAttendance = async (lessonId:string) => {
 
-  const data= await backendFetch<userInfo>(`/api/users/me`)
+  const data= await backendFetch<LessonAttendance>(`/api/lessons/${lessonId}/attendance`)
 
-  if(!data ) return null;
+  console.log(data + 'BZZ');
+
+  if(!data) return null;
 
   return data;
 
-}
+};

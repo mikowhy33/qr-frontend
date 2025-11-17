@@ -4,33 +4,18 @@ import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from '.
 
 import { useEffect, useRef, useState } from 'react';
 import { LessonAttendance } from '@/types/classType';
-
-async function getAttendance(lessonId: string) {
-  const res = await fetch(`http://localhost:3001/api/get_lesson_attendance?lessonId=${lessonId}`, {
-    cache: 'no-store',
-  });
-
-  if (!res.ok) {
-    console.error('Fetch error:', await res.text());
-    return [];
-  }
-
-  const data = await res.json();
-
-  console.log(data);
-
-  return data;
-}
+import { getLessonAttendance } from '@/services/api';
 
 export default function AttendanceTable(params: any) {
-  const [lessonattendanceInfo, LessonsetAttendanceInfo] = useState<LessonAttendance | null>(null);
+  const [lessonAttendanceInfo, LessonsetAttendanceInfo] = useState<LessonAttendance | null>(null);
 
   const buttonRef = useRef<any>('');
 
   const refreshDataAttendance = async () => {
-    const dataattendance: LessonAttendance = await getAttendance(params.lessonId);
-    console.log(dataattendance + 'ATTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTENDAAANCE');
-    LessonsetAttendanceInfo(dataattendance);
+    // fetch to services/api for our attendance!
+    const dataAttendance: LessonAttendance | null = await getLessonAttendance(params.lessonId);
+
+    LessonsetAttendanceInfo(dataAttendance);
   };
 
   // button will be refreshed every 10 seconds
@@ -49,7 +34,12 @@ export default function AttendanceTable(params: any) {
       <button onClick={refreshDataAttendance} ref={buttonRef}>
         Refresh the attendance manually
       </button>
-      <p>{lessonattendanceInfo?.lessonId}</p>
+      <p>{lessonAttendanceInfo?.lessonId}</p>
+
+      <div className="bg-gray-100 p-4 m-4 rounded border border-red-500">
+        <p className="font-bold text-red-500">DEBUGGER :</p>
+        <pre className="text-xs overflow-auto">{JSON.stringify(lessonAttendanceInfo, null, 2)}</pre>
+      </div>
       <div className=" flex flex-col justify-center items-center">
         <Table className="max-w-6xl mx-auto">
           <TableHeader>
@@ -62,7 +52,7 @@ export default function AttendanceTable(params: any) {
           </TableHeader>
 
           <TableBody>
-            {lessonattendanceInfo?.attendees.map((stud) => (
+            {lessonAttendanceInfo?.attendees.map((stud) => (
               <TableRow key={stud.studentId}>
                 <TableCell className="font-medium">{stud.studentId}</TableCell>
                 <TableCell>{stud.name}</TableCell>

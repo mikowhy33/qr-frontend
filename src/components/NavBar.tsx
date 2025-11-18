@@ -8,8 +8,13 @@ import {
 } from './ui/navigation-menu';
 
 import { SignOutButton } from '@clerk/nextjs';
+import { getUserRole } from '@/services/api';
 
-export const NavBar = () => {
+export const NavBar = async () => {
+  const data = await getUserRole();
+
+  const isTeacher = data?.role === 'teacher';
+
   return (
     <header className=" flex justify-center mt-5 mb-5">
       {/* <div className='mr-auto'>bzz</div> */}
@@ -31,14 +36,15 @@ export const NavBar = () => {
             </NavigationMenuLink>
           </NavigationMenuItem>
 
-          <NavigationMenuItem>
-            <NavigationMenuLink asChild>
-              <Link href="/create_new_class" passHref>
-                Create new Class
-              </Link>
-            </NavigationMenuLink>
-          </NavigationMenuItem>
-
+          {isTeacher && (
+            <NavigationMenuItem>
+              <NavigationMenuLink asChild>
+                <Link href="/create_new_class" passHref>
+                  Create new Class
+                </Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+          )}
           <NavigationMenuItem>
             <SignOutButton>
               {/* styles taken from the menu, built in shadcn! */}

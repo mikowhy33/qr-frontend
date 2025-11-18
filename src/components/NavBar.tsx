@@ -23,18 +23,18 @@ export const NavBar = async () => {
           <NavigationMenuItem>
             <NavigationMenuLink asChild>
               <Link href="/" passHref>
-                Home
-              </Link>
-            </NavigationMenuLink>
-          </NavigationMenuItem>
-
-          <NavigationMenuItem>
-            <NavigationMenuLink asChild>
-              <Link href="/getUserClasses" passHref>
                 Classes
               </Link>
             </NavigationMenuLink>
           </NavigationMenuItem>
+
+          {/* <NavigationMenuItem>
+            <NavigationMenuLink asChild>
+              <Link href="old_way_search_params/getUserClasses" passHref>
+                Classes
+              </Link>
+            </NavigationMenuLink>
+          </NavigationMenuItem> */}
 
           {isTeacher && (
             <NavigationMenuItem>

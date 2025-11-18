@@ -49,7 +49,7 @@ export default async function userClasses() {
                 key={index}
                 className="w-full max-w-sm flex flex-col items-center text-center m-2 p-2 cursor-pointer hover:scale-105 transition-transform duration-300"
               >
-                <Link href={`/get_lessons_by_class?classId=${class1.id}`}>
+                <Link href={`/old_way_search_params/get_lessons_by_class?classId=${class1.id}`}>
                   {Object.entries(class1).map(([key, value]) => (
                     <div key={key} className="p-1">
                       <p key={key}>

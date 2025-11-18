@@ -8,11 +8,12 @@ import { redirect } from 'next/navigation';
 
 
 
+// were getting the params from the link (after? are search params but were not using that)
+// ex http://localhost:3001/user_classes/cmhywp2a80001ezkck7e43hf1
+export default async function getLessonAttendance({ params }: { params: { classId: string } }) {
 
-export default async function getLessonAttendance({ searchParams }: { searchParams: { classId: string } }) {
 
-
-  const { classId } = await searchParams;
+  const { classId } = await params;
 
   const lessons= await getLessons(classId);
   
@@ -55,7 +56,7 @@ export default async function getLessonAttendance({ searchParams }: { searchPara
                 className="w-full max-w-sm flex flex-col items-center text-center m-2 p-2 cursor-pointer hover:scale-105 transition-transform duration-300"
               >
                 {/* we pass the lesson id, for which the qr code shall be generated */}
-                <Link href={`/generate_qr?lessonId=${lesson.id}`}>
+                <Link href={`/user_classes/${classId}/lessons/${lesson.id}`}>
                   {Object.entries(lesson).map(([key, value]) => (
                     <div key={key} className="p-1">
                       <p key={key}>
@@ -72,7 +73,6 @@ export default async function getLessonAttendance({ searchParams }: { searchPara
       ) : (
      
         <>
-         <div>{userRole.role}</div>
           <div className="flex flex-wrap justify-center gap-8 m-4 ">
             {lessons.map((lesson, index) => (
               <Card
@@ -81,7 +81,7 @@ export default async function getLessonAttendance({ searchParams }: { searchPara
                 className="w-full max-w-sm flex flex-col items-center text-center m-2 p-2 cursor-pointer hover:scale-105 transition-transform duration-300"
               >
                 {/* we pass the lesson id, for which the qr code shall be generated */}
-                <Link href={`/scan_qr`}>
+                <Link href={`/user_classes/${classId}/lessons/${lesson.id}/scan_qr`}>
                   {Object.entries(lesson).map(([key, value]) => (
                     <div key={key} className="p-1">
                       <p key={key}>

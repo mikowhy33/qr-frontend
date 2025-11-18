@@ -2,7 +2,17 @@
 
 import { backendFetch } from '@/lib/backend';
 
-import { attendanceScan, BackendClassResponse, classInfo, LessonAttendance, lessonAttendanceStart, lessonInfo, userInfo } from '@/types/classType';
+import {
+  attendanceScan,
+  BackendClassResponse,
+  classInfo,
+  CreatedClass,
+  LessonAttendance,
+  lessonAttendanceStart,
+  lessonInfo,
+  SuccessResponseCreatedClass,
+  userInfo,
+} from '@/types/classType';
 
 // getting classes
 
@@ -65,16 +75,25 @@ export const startAttendtance = async (lessonId: string) => {
 };
 
 // info abt qrToken which the teacher has created!
-export const scanAttendance=async(qrToken:string)=>{
+export const scanAttendance = async (qrToken: string) => {
+  const data = await backendFetch<attendanceScan>(`/api/attendance/scan`, {
+    method: 'POST',
+    body: JSON.stringify({ token: qrToken }),
+  });
 
-  const data=await backendFetch<attendanceScan>(`/api/attendance/scan`,{
-    method:'POST',
-    body:JSON.stringify({token:qrToken})
-  })
-
-  if(!data) return null;
+  if (!data) return null;
 
   return data;
+};
 
+export const createClass = async (name: string, description: string) => {
+  const data = await backendFetch<SuccessResponseCreatedClass>('/api/classes', {
+    method: 'POST',
+    // parsing the data
+    body: JSON.stringify({ name: name, description: description }),
+  });
 
-}
+  if (!data) return null;
+
+  return data;
+};

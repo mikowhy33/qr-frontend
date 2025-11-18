@@ -57,3 +57,17 @@ export type LessonAttendance = {
   lessonId: string;
   attendees: Attendee[];
 };
+
+
+export type CreatedClass={
+  name:string,
+  description:string
+}
+
+
+export type SuccessResponseCreatedClass={
+  id:string,
+  teacherId:string,
+  name:string,
+  description:string
+}

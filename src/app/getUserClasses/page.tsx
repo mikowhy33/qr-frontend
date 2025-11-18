@@ -18,18 +18,12 @@ export default async function userClasses() {
   // we render the data
   return (
     <div>
-      {/* <h1>Classes</h1>
-      <p>
-        Data from <strong>{`http://localhost:3000/api/classes`}</strong>:
-      </p> */}
-
       {classes ? (
         // Data as JSON
         <>
           <pre className="whitespace-pre-wrap break-all bg-gray-100 p-2 rounded text-xs overflow-hidden">
             {JSON.stringify(classes, null, 2)}
           </pre>
-
 
           {/* Object.entries to make from a obj a table of little tables [key]:value
           

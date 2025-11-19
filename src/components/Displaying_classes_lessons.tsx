@@ -24,14 +24,15 @@ export const GenericList = <T extends { id: string | number }>(params: GenericLi
             // asChild allows to take all styles and formats from Card but behaves as a link, whole card is clickable not only the link
             asChild
             key={index}
-            className="w-full max-w-sm flex flex-col items-center text-center m-2 p-2 cursor-pointer hover:scale-105 transition-transform duration-300"
+            className="w-full max-w-sm flex flex-col items-center text-center m-2 p-2
+             cursor-pointer hover:scale-105 transition-transform duration-300 bg-indigo-50/50 border border-indigo-100"
           >
             {/* this link changes every time so we have to include this */}
             <Link href={getLink(item)}>
               {Object.entries(item).map(([key, value]) => (
                 <div key={key} className="p-1">
                   <p key={key}>
-                    <strong>{key}</strong>: {String(value)} 
+                    <strong>{key}</strong>: {String(value)}
                   </p>
                 </div>
               ))}

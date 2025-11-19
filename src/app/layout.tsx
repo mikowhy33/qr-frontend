@@ -32,7 +32,7 @@ export default function RootLayout({
         <body className=" flex flex-col  min-h-screen overflow-x-hidden">
           <SignedIn>
             <NavBar></NavBar>
-            <InfoAboutUser></InfoAboutUser>
+            {/* <InfoAboutUser></InfoAboutUser> */}
           </SignedIn>
           {children}
         </body>

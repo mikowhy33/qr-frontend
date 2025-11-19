@@ -31,8 +31,14 @@ export default function scanQR() {
       setScanResult(`Congratulations! ${data2.message} for lesson ${data2.lessonId}  ${data2.status}  `);
       return data2;
     } catch (err: any) {
+      let msg = err.message;
       console.error(err);
-      setError(err.message || 'There has been an error');
+
+      if (msg.includes('Already checked in')) {
+        msg = 'You have alreadey checked in! ✅';
+      }
+
+      setError(msg);
     }
   };
 
@@ -42,7 +48,7 @@ export default function scanQR() {
 
   return (
     <>
-      <div className='mx-auto mb-2'>Please scan the qr Code to mark your attendance</div>
+      <div className="mx-auto mb-2">Please scan the qr Code to mark your attendance</div>
 
       <QrScanner onScanSuccess={handleScanSuccess} onScanError={onScanFailure}></QrScanner>
       <div className="flex flex-col items-center">

@@ -33,15 +33,20 @@ export async function backendFetch<T>(endpoint: string, options: RequestInit = {
     });
 
     if (!res.ok) {
-      console.error(`BACKEND ERROR, ${res.status} for ${endpoint}`, await res.text());
-      return null;
-    }
+      // We try to get info from backend
+      let errorMessage = `Backend error: ${res.status}`;
+      try {
+        const errorBody = await res.json();
+        // First message then error then default
+        errorMessage = errorBody.message || errorBody.error || errorMessage;
+      } catch (e) {}
+      console.error(`[BackendFetch] Error ${res.status}: ${errorMessage}`);
 
+      throw new Error(errorMessage);
+    }
     return await res.json();
   } catch (error) {
     console.error(`BACKEND CRITICAL ERROR! ${endpoint} `, error);
-    return null;
+    throw error;
   }
 }
-
-

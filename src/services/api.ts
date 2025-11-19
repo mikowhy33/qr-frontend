@@ -38,9 +38,18 @@ export const getLessons = async (classId: string) => {
 
   if (!data) return null;
 
+  const filtered=data.map((c)=>({
+    id:c.id,
+    classId:c.classId,
+    topic:c.topic,
+    date:c.date,
+    startTime:c.startTime,
+    endTime:c.endTime
+  }))
+
   // console.log(data)
 
-  return data;
+  return filtered;
 };
 
 // geeting a userRole

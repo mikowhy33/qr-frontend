@@ -5,6 +5,7 @@ import { classInfo } from '@/types/classType';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { getClasses } from '@/services/api';
+import { GenericList } from '@/components/Displaying_classes_lessons';
 
 // main component
 export default async function userClasses() {
@@ -25,42 +26,7 @@ export default async function userClasses() {
             {JSON.stringify(classes, null, 2)}
           </pre>
 
-          {/* Object.entries to make from a obj a table of little tables [key]:value
-          
-          ex:
-          const user = 
-          {
-            name: "Joe",
-            age: 30,
-          };
-          
-          after enties:
-          [
-            [ "name", "Miki" ],
-            [ "age", 30 ],
-            [ "isStudent", false ]
-          ]
-          */}
-          <div className="flex flex-wrap justify-center gap-8 m-4 ">
-            {classes.map((class1, index) => (
-              <Card
-                // asChild allows to take all styles and formats from Card but behaves as a link, whole card is clickable not only the link
-                asChild
-                key={index}
-                className="w-full max-w-sm flex flex-col items-center text-center m-2 p-2 cursor-pointer hover:scale-105 transition-transform duration-300"
-              >
-                <Link href={`/user_classes/${class1.id}`}>
-                  {Object.entries(class1).map(([key, value]) => (
-                    <div key={key} className="p-1">
-                      <p key={key}>
-                        <strong>{key}</strong>: {value}
-                      </p>
-                    </div>
-                  ))}
-                </Link>
-              </Card>
-            ))}
-          </div>
+          <GenericList items={classes} getLink={(cls) => `/user_classes/${cls.id}`}></GenericList>
         </>
       ) : (
         // if issue

@@ -27,13 +27,13 @@ export const LessonCreationForm = ({ classId, setShowTheForm }: ClassId) => {
   return (
     <div
       // fixed always gets a thing centered, inset-0 will get the background all the way on the screen
-      className="fixed top-[64px] right-0 left-0 bottom-0  flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-black/60 backdrop-blur-sm"
+      className="fixed top-[64px]  overflow-y-auto right-0 left-0 bottom-0  flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-black/60 backdrop-blur-sm"
       onClick={() => setShowTheForm(false)}
     >
       {/* main cart of the form */}
 
       <div
-        className="max-w-md w-full space-y-8 bg-white p-8 rounded-xl shadow-lg border border-slate-100"
+        className="max-w-md mt-12 w-full m-2 space-y-8 bg-white p-8 rounded-xl shadow-lg border border-slate-100"
         // the click ends here it doesnt go up so we dont close the form when clicking on things inside this input
         onClick={(e) => e.stopPropagation()}
       >
@@ -51,7 +51,7 @@ export const LessonCreationForm = ({ classId, setShowTheForm }: ClassId) => {
         {/* where the form starts */}
         <form
           action=""
-          className="mt-8 space-y-6"
+          className="mt-4 space-y-6"
           onSubmit={async (e) => {
             e.preventDefault();
 

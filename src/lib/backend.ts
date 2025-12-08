@@ -44,6 +44,10 @@ export async function backendFetch<T>(endpoint: string, options: RequestInit = {
 
       throw new Error(errorMessage);
     }
+
+    if (options.method === 'DELETE') {
+      return null as T;
+    }
     return await res.json();
   } catch (error) {
     console.error(`BACKEND CRITICAL ERROR! ${endpoint} `, error);

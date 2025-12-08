@@ -18,11 +18,9 @@ export const AddLessonDialog = ({ classId }: ClassId) => {
 
   const [showTheForm, setShowTheForm] = useState(false);
 
-  // na przycisk delegujemy a jak nie to nie
-
   return (
     <>
-      <div>
+      <div className='w-max-md lg:w-md'>
         <button
           className="w-full max-w-sm flex flex-col items-center text-center m-2 p-2 rounded-2xl
              cursor-pointer hover:scale-105 transition-transform duration-300 bg-indigo-50/50 border border-indigo-100"

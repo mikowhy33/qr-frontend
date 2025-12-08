@@ -120,3 +120,14 @@ export const createLesson = async (classId: string, topic: string, date: string,
 
   return data;
 };
+
+// deleting a lesson
+export const deleteAClass = async (classId: string) => {
+  const data = await backendFetch(`/api/classes/${classId}`, {
+    method: 'DELETE',
+  });
+
+  if (!data) return null;
+
+  return data;
+};

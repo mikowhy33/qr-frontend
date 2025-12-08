@@ -11,6 +11,7 @@ import {
   lessonAttendanceStart,
   lessonInfo,
   SuccessResponseCreatedClass,
+  SuccessResponseCreatedLesson,
   userInfo,
 } from '@/types/classType';
 
@@ -38,14 +39,14 @@ export const getLessons = async (classId: string) => {
 
   if (!data) return null;
 
-  const filtered=data.map((c)=>({
-    id:c.id,
-    classId:c.classId,
-    topic:c.topic,
-    date:c.date,
-    startTime:c.startTime,
-    endTime:c.endTime
-  }))
+  const filtered = data.map((c) => ({
+    id: c.id,
+    lessonId: c.classId,
+    topic: c.topic,
+    date: c.date,
+    startTime: c.startTime,
+    endTime: c.endTime,
+  }));
 
   // console.log(data)
 
@@ -95,11 +96,24 @@ export const scanAttendance = async (qrToken: string) => {
   return data;
 };
 
+// creating a class
 export const createClass = async (name: string, description: string) => {
   const data = await backendFetch<SuccessResponseCreatedClass>('/api/classes', {
     method: 'POST',
     // parsing the data
     body: JSON.stringify({ name: name, description: description }),
+  });
+
+  if (!data) return null;
+
+  return data;
+};
+
+// creating a lesson based on the classId
+export const createLesson = async (classId: string, topic: string, date: string, startTime: string, endTime: string) => {
+  const data = await backendFetch<SuccessResponseCreatedLesson>(`/api/classes/${classId}/lessons`, {
+    method: 'POST',
+    body: JSON.stringify({ topic, date, startTime, endTime }),
   });
 
   if (!data) return null;

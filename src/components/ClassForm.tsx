@@ -3,7 +3,6 @@ import { createClass } from '@/services/api';
 import { SuccessResponseCreatedClass } from '@/types/classType';
 import { useRef, useState } from 'react';
 
-
 export const ClassCreationForm = () => {
   const [infoFromBackend, setInfoFromBackend] = useState<SuccessResponseCreatedClass | null>();
 
@@ -17,7 +16,7 @@ export const ClassCreationForm = () => {
         {/* Header */}
         <div className="text-center">
           <h2 className="text-3xl font-bold text-slate-900">Create New Class</h2>
-          <p className="mt-2 text-sm text-slate-600">Fill in the details to start a new attendance list.</p>
+          <p className="mt-2 text-sm text-slate-600">Fill in the details to create a new class.</p>
         </div>
 
         {/* where the form starts */}

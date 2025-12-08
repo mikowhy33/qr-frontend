@@ -10,6 +10,7 @@ import { GenericList } from '@/components/Displaying_classes_lessons';
 // main component
 export default async function userClasses() {
   // ! a fetch for classes to services/api !
+  // all classes in a list, only here were takin things from server!
   const classes = await getClasses();
 
   if (!classes) {
@@ -26,7 +27,16 @@ export default async function userClasses() {
             {JSON.stringify(classes, null, 2)}
           </pre>
 
-          <GenericList items={classes} getLink={(cls) => `/user_classes/${cls.id}`}></GenericList>
+          <GenericList
+            items={classes}
+            getLink={(cls) => {
+              // dont care abt it we can create it freely
+              const name = cls.name;
+              // returning string as requested, we searchParams so we can get the name of class without the need to take it from
+              // backend
+              return `/user_classes/${cls.id}?className=${encodeURIComponent(name)}`;
+            }}
+          ></GenericList>
         </>
       ) : (
         // if issue
@@ -35,3 +45,5 @@ export default async function userClasses() {
     </div>
   );
 }
+
+

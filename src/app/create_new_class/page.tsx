@@ -1,5 +1,5 @@
 import AccessDenied from '@/components/ActionDenied';
-import { ClassCreationForm } from '@/components/Form';
+import { ClassCreationForm } from '@/components/ClassForm';
 import { getUserRole } from '@/services/api';
 import { redirect } from 'next/navigation';
 

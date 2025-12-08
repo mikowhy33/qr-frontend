@@ -1,4 +1,6 @@
+import { AddLessonDialog } from '@/components/AddLessonDialog';
 import { GenericList } from '@/components/Displaying_classes_lessons';
+import { LessonCreationForm } from '@/components/LessonsForm';
 import { Card } from '@/components/ui/card';
 import { getLessons, getUserRole } from '@/services/api';
 import { lessonInfo, userInfo } from '@/types/classType';
@@ -9,11 +11,17 @@ import { redirect } from 'next/navigation';
 // were getting the params from the link (after? are search params but were not using that)
 // ex http://localhost:3001/user_classes/cmhywp2a80001ezkck7e43hf1
 export default async function getLessonAttendance({ params }: { params: { classId: string } }) {
+  
+  // awaiting classId from params we have in web
   const { classId } = await params;
+
 
   const lessons = await getLessons(classId);
 
   const userRole = await getUserRole();
+
+
+  
 
   if (!lessons) {
     return <p>Server error...</p>;
@@ -25,8 +33,13 @@ export default async function getLessonAttendance({ params }: { params: { classI
 
   return (
     <>
+      {/* cala strona podsiadajaca komponent */}
       {userRole.role == 'teacher' && lessons ? (
         <>
+          <div className="mx-auto">
+          
+            {userRole.role === 'teacher' && <AddLessonDialog classId={classId} />}
+          </div>
           <GenericList items={lessons} getLink={(cls) => `/user_classes/${classId}/lessons/${cls.id}`}></GenericList>
         </>
       ) : (

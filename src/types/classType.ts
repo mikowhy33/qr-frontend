@@ -71,3 +71,7 @@ export type SuccessResponseCreatedClass={
   name:string,
   description:string
 }
+
+export type SuccessResponseCreatedLesson={
+  response:string;
+}

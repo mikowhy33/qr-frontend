@@ -3,6 +3,7 @@ import Link from 'next/link';
 
 type GenericListProps<T> = {
   items: T[];
+  // name:string;
   // func that takes our item (class/less) and returns link 2 it
   getLink: (item: T) => string;
 };
@@ -12,6 +13,8 @@ export const GenericList = <T extends { id: string | number }>(params: GenericLi
   const { items } = params;
   const { getLink } = params;
 
+  // console.log(items[0].name)
+
   if (!items || items.length === 0) {
     return <p className="text-center p-4 text-gray-500">No data to display.</p>;
   }
@@ -19,6 +22,7 @@ export const GenericList = <T extends { id: string | number }>(params: GenericLi
   return (
     <>
       <div className="flex flex-wrap justify-center gap-8 m-4 ">
+        {/* komponent reuzywalny */}
         {items?.map((item, index) => (
           <Card
             // asChild allows to take all styles and formats from Card but behaves as a link, whole card is clickable not only the link
@@ -28,6 +32,7 @@ export const GenericList = <T extends { id: string | number }>(params: GenericLi
              cursor-pointer hover:scale-105 transition-transform duration-300 bg-indigo-50/50 border border-indigo-100"
           >
             {/* this link changes every time so we have to include this */}
+
             <Link href={getLink(item)}>
               {Object.entries(item).map(([key, value]) => (
                 <div key={key} className="p-1">

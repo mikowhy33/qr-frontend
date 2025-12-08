@@ -7,7 +7,7 @@ export async function NavBar() {
   const user = await getUserRole();
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-500 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between px-4 md:px-8 mx-auto max-w-7xl">
         {/* --- Left side (LOGO + NAV) --- */}
         <div className="flex gap-6 md:gap-10">

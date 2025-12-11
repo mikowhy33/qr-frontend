@@ -28,14 +28,14 @@ export const LessonCreationForm = ({ classId, setShowTheForm }: ClassId) => {
     <>
       <div
         // fixed always positions element relative to the browser window, inset-0 will get the background all the way on the screen
-        className="fixed top-[64px]  overflow-y-auto right-0 left-0 bottom-0  flex flex-col items-center  py-12 px-4 sm:px-6 lg:px-8 bg-black/60 backdrop-blur-sm"
+        className="fixed top-[64px] overflow-y-auto right-0 left-0 bottom-0  flex flex-col items-center  py-12 px-4 sm:px-6 lg:px-8 bg-black/60 backdrop-blur-sm"
         onClick={() => setShowTheForm(false)}
       >
       {/* <div className="mt-4 ">zz</div> */}
         {/* main cart of the form */}
 
         <div
-          className="max-w-md  w-full m-2 space-y-8 bg-white p-8 rounded-xl shadow-lg border border-slate-100"
+          className="max-w-md my-auto w-full m-2 space-y-8 bg-white p-8 rounded-xl shadow-lg border border-slate-100"
           // the click ends here it doesnt go up so we dont close the form when clicking on things inside this input
           onClick={(e) => e.stopPropagation()}
         >

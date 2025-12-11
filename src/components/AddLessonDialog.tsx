@@ -22,7 +22,7 @@ export const AddLessonDialog = ({ classId }: ClassId) => {
     <>
       <div className='w-max-md lg:w-md'>
         <button
-          className="w-full max-w-sm flex flex-col items-center text-center m-2 p-2 rounded-2xl
+          className="w-full h-full min-h-18 max-w-sm flex flex-col items-center text-center m-2 p-2 rounded-2xl
              cursor-pointer hover:scale-105 transition-transform duration-300 bg-indigo-50/50 border border-indigo-100"
           onClick={() => setShowTheForm((prev) => !prev)}
         >

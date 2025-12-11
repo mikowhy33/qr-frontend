@@ -41,7 +41,7 @@ export const DeleteClass = ({ classId }: ClassId) => {
     <>
       <div className="w-max-md lg:w-md">
         <button
-          className="w-full max-w-sm flex flex-col items-center text-center m-2 p-2 rounded-2xl
+          className="w-full max-w-sm min-h-18  flex flex-col items-center text-center m-2 p-2 rounded-2xl
              cursor-pointer hover:scale-105 transition-transform duration-300 bg-red-200 border border-red-500"
           onClick={DeleteSingleClass}
         >

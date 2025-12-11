@@ -1,4 +1,5 @@
 import { AddLessonDialog } from '@/components/AddLessonDialog';
+import { AddStudent } from '@/components/AddStudent';
 import { DeleteClass } from '@/components/DeleteClass';
 import { GenericList } from '@/components/Displaying_classes_lessons';
 import { LessonCreationForm } from '@/components/LessonsForm';
@@ -38,6 +39,7 @@ export default async function getLessonAttendance({ params }: { params: { classI
          <div className="flex flex-col lg:flex-row items-center justify-center gap-4">
             <AddLessonDialog classId={classId}></AddLessonDialog>
             <DeleteClass classId={classId}></DeleteClass>
+            <AddStudent classId={classId}></AddStudent>
           </div>
           <GenericList items={lessons} getLink={(cls) => `/user_classes/${classId}/lessons/${cls.id}`}></GenericList>
         </>

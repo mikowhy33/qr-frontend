@@ -131,3 +131,14 @@ export const deleteAClass = async (classId: string) => {
 
   return data;
 };
+
+export const enrollStudent = async (classId: string, userId: string, name: string, email: string) => {
+  const data = await backendFetch(`/api/classes/${classId}/enroll`, {
+    method: 'POST',
+    body: JSON.stringify({ userId, name, email }),
+  });
+
+  if (!data) return null;
+
+  return data;
+};

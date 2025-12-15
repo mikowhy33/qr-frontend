@@ -6,8 +6,9 @@ import { lessonAttendanceStart } from '@/types/classType';
 import { time } from 'console';
 import { startAttendtance } from '@/services/api';
 
-// in future fetching maybe on client!
+
 async function getQRCode(token: string | null) {
+  
   // WHILE HOSTING THIS HAS TO CHANGE!!
   const res = await fetch(`http://localhost:3001/api/QR_code_GENERATION`, {
     cache: 'no-store',
@@ -53,7 +54,7 @@ export const OneLessonPage = (params: any) => {
       return;
     }
 
-    // now just to show it in future info abt this deleted!
+ 
     setinfoAboutStartOfAttendance(QRCodeBasedInfo);
 
     // were getting a blob with our qr code info
@@ -81,7 +82,7 @@ export const OneLessonPage = (params: any) => {
     if (timerStarted === false) return;
 
     const interval = setInterval(() => {
-      // if less thank 1 we reset
+      // if less than 1 we reset
       setSecondsLeft((prev) => {
         if (prev <= 1) {
           clearInterval(interval);
@@ -102,7 +103,7 @@ export const OneLessonPage = (params: any) => {
 
   const [testState, useTestState] = useState(0);
 
-  // const isButtonDisabled = secondsLeft !== 0 && !firstRender;
+
   console.log(QRGenerated);
   return (
     <>
@@ -110,18 +111,16 @@ export const OneLessonPage = (params: any) => {
       <div className="w-full max-w-4xl mx-auto p-6 space-y-8">
         <div>{JSON.stringify(infoAboutStartOfAttendance)}</div>
 
-        {/* we are telling of everything in column and centered, but in addition we use a nice trick of styling which is using a white background, a 
-        shadow, and a border which is only 5% darker than the background */}
+        
         <div className=" flex flex-col items-center justify-center gap-6 bg-white rounded-2xl shadow-lg border border-slate-100 ">
           <button
             onClick={() => generateNewSession()}
-            // relative is 4 future, doesnt to anything rn, transition- all tells no matter what changes
-            // dont do it right away, duration we tell for how it will last
+      
             className={`relative px-8 py-4 my-7 rounded-xl font-bold text-white shadow-lg transition-all duration-300 flex items-center gap-2 ${
               isDisbaled
-                ? // opacity so its kinda mist
+                ? 
                   'bg-slate-400  opacity-80'
-                : // translate we move item up, scale-95 means on active (when we click) it gets little bit smaller
+                : 
                   'bg-indigo-600 hover:bg-indigo-700 hover:shadow-indigo-500/30 hover:-translate-y-1 active:scale-90'
             }`}
           >
@@ -134,15 +133,15 @@ export const OneLessonPage = (params: any) => {
             </p>
           )}
 
-          {/* we are limiting the size of things, aspect-square says no matter what it has to be a square */}
+        
           <div className="w-full max-w-[300px] aspect-square mx-auto my-4">
-            {/* has the max width height of parent, anythign changes he will do the animation which will last 500ms */}
+      
             <div className={` w-full h-full transition-all duration-500 ${QRGenerated ? 'opacity-100 scale-100' : 'opacity-50 scale-95 '}`}>
               {QRGenerated ? (
                 <img
                   src={QRGenerated.qr}
                   alt="QR Code"
-                  // contain so the img (qr code) will always fill the img
+              
                   className="w-full h-full  object-contain  rounded-xl border-4 border-slate-800 shadow-2xl"
                 />
               ) : (
@@ -160,8 +159,7 @@ export const OneLessonPage = (params: any) => {
             </p>
           </div>
         </div>
-        {/* <button onClick={() => useTestState((prev) => prev + 1)}>Refresh</button>
-        <div>{testState}zz</div> */}
+      
       </div>
     </>
   );

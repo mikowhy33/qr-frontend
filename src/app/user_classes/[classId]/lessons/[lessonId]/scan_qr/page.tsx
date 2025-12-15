@@ -1,14 +1,13 @@
 'use client';
 
-// To use Html5QrcodeScanner (more info below)
+
 import { QrScanner } from '@/components/scanQRstudent';
 import { scanAttendance } from '@/services/api';
 import { attendanceScan } from '@/types/classType';
 import { useAuth } from '@clerk/nextjs';
 import { Html5QrcodeScanner } from 'html5-qrcode';
 
-// To use Html5Qrcode (more info below)
-import { Html5Qrcode } from 'html5-qrcode';
+
 import { useState } from 'react';
 
 export default function scanQR() {
@@ -43,7 +42,7 @@ export default function scanQR() {
   };
 
   function onScanFailure(error: string) {
-    // console.warn(`Code scan error = ${error}`);
+    
   }
 
   return (

@@ -11,7 +11,6 @@ type ClassId = {
 export const LessonCreationForm = ({ classId, setShowTheForm }: ClassId) => {
   const [infoFromBackend, setInfoFromBackend] = useState<SuccessResponseCreatedLesson | null>();
 
-  // const reference = useRef<any>('');
 
   const [displayErrors, setDisplayErrors] = useState(false);
 
@@ -22,21 +21,20 @@ export const LessonCreationForm = ({ classId, setShowTheForm }: ClassId) => {
   const [emptystartTime, setEmptyStartTime] = useState('');
   const [emptyendTime, setEmptyEndTime] = useState('');
 
-  // const [clicktoclose,setclicktoclose]=useState(false)
+ 
 
   return (
     <>
       <div
-        // fixed always positions element relative to the browser window, inset-0 will get the background all the way on the screen
+    
         className="fixed top-[64px] overflow-y-auto right-0 left-0 bottom-0  flex flex-col items-center  py-12 px-4 sm:px-6 lg:px-8 bg-black/60 backdrop-blur-sm"
         onClick={() => setShowTheForm(false)}
       >
-      {/* <div className="mt-4 ">zz</div> */}
-        {/* main cart of the form */}
+      
 
         <div
           className="max-w-md my-auto w-full m-2 space-y-8 bg-white p-8 rounded-xl shadow-lg border border-slate-100"
-          // the click ends here it doesnt go up so we dont close the form when clicking on things inside this input
+          // the click ends here it doesnt go up so we dont close the form when clicking on things inside this input!
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
@@ -65,7 +63,7 @@ export const LessonCreationForm = ({ classId, setShowTheForm }: ClassId) => {
 
               console.log(formData);
 
-              // need 2 parse as string bcs formData return FormDataEntryValue|null, so File|string|null
+              // need 2 parse as string bcs formData return FormDataEntryValue|null, so File|string|null!
               const name = formData.get('nameOfLesson') as string;
               const date = formData.get('dateOfLesson') as string;
               const startTime = formData.get('startTime') as string;
@@ -80,14 +78,14 @@ export const LessonCreationForm = ({ classId, setShowTheForm }: ClassId) => {
 
               console.log(name, date, startTime, endTime + '11', 'BZZ');
 
-              // console.log(requiredFields);
+            
               for (const field of requiredFields) {
                 const value = formData.get(field);
 
                 if (!value || value == '') {
                   // were getting input based on the name of all elements. this return INPUT!
                   const inputEl = form.elements.namedItem(field) as HTMLInputElement;
-                  // we can focus an input
+                
                   inputEl?.focus();
                   setError(true);
                   return;
@@ -115,7 +113,7 @@ export const LessonCreationForm = ({ classId, setShowTheForm }: ClassId) => {
                 id="nameOfLesson"
                 placeholder="Variables"
                 name="nameOfLesson"
-                // ref={reference}
+              
                 className={`w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200 ${
                   error && emptyName === '' ? 'border-red-500 focus:ring-red-500' : 'border-slate-300 focus:ring-indigo-500'
                 }`}
@@ -123,8 +121,7 @@ export const LessonCreationForm = ({ classId, setShowTheForm }: ClassId) => {
             </div>
 
             {displayErrors && emptyName === '' && <p className="text-red-500">This field is required!</p>}
-            {/* {displayErrors==true?emptyName!==""?null: <p className="text-red-500">This field is required!</p>:null} */}
-
+          
             {/* Input 2: Date */}
             <div className="flex flex-col">
               <label htmlFor="dateOfLesson" className="mb-2 text-sm font-medium text-slate-700">
@@ -171,7 +168,7 @@ export const LessonCreationForm = ({ classId, setShowTheForm }: ClassId) => {
             </div>
             {displayErrors && emptyendTime === '' && <p className="text-red-500">This field is required!</p>}
 
-            {/* Submit Button */}
+           
             <button
               type="submit"
               className="w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-200 shadow-md hover:shadow-lg"
@@ -184,8 +181,6 @@ export const LessonCreationForm = ({ classId, setShowTheForm }: ClassId) => {
         {infoFromBackend && (
           <div className="mt-8 p-4 bg-green-50 border border-green-200 rounded-lg text-green-700 text-center">
             <p className="font-bold text-green-600">Success! Lesson Created 🎉</p>
-            {/* <p className="text-sm">Response: {infoFromBackend.response}</p> */}
-            {/* <p className="text-xs text-green-600 mt-1">ID: {infoFromBackend.id}</p> */}
           </div>
         )}
       </div>

@@ -30,22 +30,6 @@ export default async function getLessonAttendance({ searchParams }: { searchPara
     <>
       {userRole.role == 'teacher' && lessons ? (
         <>
-          {/* Object.entries to make from a obj a table of little tables [key]:value
-          
-          ex:
-          const user = 
-          {
-            name: "Joe",
-            age: 30,
-          };
-          
-          after enties:
-          [
-            [ "name", "Miki" ],
-            [ "age", 30 ],
-            [ "isStudent", false ]
-          ]
-          */}
           <div className="flex flex-wrap justify-center gap-8 m-4 ">
             {lessons.map((lesson, index) => (
               <Card
@@ -100,15 +84,3 @@ export default async function getLessonAttendance({ searchParams }: { searchPara
     </>
   );
 }
-
-/*
-
- const res = await fetch(API_URL, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      // cache: 'no-store' always fresh data
-      cache: 'no-store',
-
-*/

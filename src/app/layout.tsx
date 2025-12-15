@@ -10,7 +10,6 @@ const geistSans = Geist({
   variable: '--font-geist-sans',
   subsets: ['latin'],
 }); 
-//z
 
 const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
@@ -33,7 +32,7 @@ export default function RootLayout({
         <body className=" flex flex-col  min-h-screen overflow-x-hidden">
           <SignedIn>
             <NavBar></NavBar>
-            {/* <InfoAboutUser></InfoAboutUser> */}
+           
           </SignedIn>
           {children}
         </body>

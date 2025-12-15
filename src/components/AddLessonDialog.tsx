@@ -10,9 +10,8 @@ type ClassId = {
 
 export const AddLessonDialog = ({ classId }: ClassId) => {
   const searchParams = useSearchParams();
-  // console.log(searchParams);
+ 
 
-  // const decoded=decodeURIComponent(searchParams)
 
   const searchParCut = searchParams.get('className');
 

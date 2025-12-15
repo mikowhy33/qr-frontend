@@ -20,15 +20,3 @@ export default async function StronaGlowna({ searchParams }: lessonType) {
     </>
   );
 }
-
-/*
-
- const res = await fetch(API_URL, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      // cache: 'no-store' always fresh data
-      cache: 'no-store',
-
-*/

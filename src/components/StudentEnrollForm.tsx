@@ -25,7 +25,7 @@ export const StudentEnrollForm = ({ classId, showTheForm }: Props) => {
   return (
     <>
       <div
-        // fixed always positions element relative to the browser window, inset-0 will get the background all the way on the screen
+      
         className="fixed top-[64px]  overflow-y-auto right-0 left-0 bottom-0  bg-black/60 backdrop-blur-sm
         flex flex-col items-center gap-6
            lg:flex-row lg:justify-around py-12 px-4 sm:px-6 lg:px-8"

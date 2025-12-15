@@ -52,14 +52,3 @@ export default async function getLessonAttendance({ params }: { params: { classI
   );
 }
 
-/*
-
- const res = await fetch(API_URL, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      // cache: 'no-store' always fresh data
-      cache: 'no-store',
-
-*/

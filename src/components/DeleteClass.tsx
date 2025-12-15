@@ -14,7 +14,7 @@ export const DeleteClass = ({ classId }: ClassId) => {
   const searchParams = searchPar.get('className');
   console.log(classId);
 
-  // move to a maybe father component and then display nicely?
+ 
   const [isDeleting, setIsDeleting] = useState(false);
 
   // hook to move the user
@@ -28,7 +28,7 @@ export const DeleteClass = ({ classId }: ClassId) => {
     try {
       await deleteAClass(classId);
 
-      // pushing user to main page
+      
       router.push('/');
     } catch (error) {
       console.error('Failed to delete class:', error);

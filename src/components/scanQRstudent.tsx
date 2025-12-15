@@ -1,4 +1,4 @@
-'use client'; // To musi być komponent kliencki
+'use client'; 
 
 import { useEffect, useRef } from 'react';
 import { Html5QrcodeScanner } from 'html5-qrcode';
@@ -14,7 +14,7 @@ type Props = {
 export const QrScanner = ({ onScanSuccess, onScanError }: Props) => {
   const qrcodeRegionId = 'html5qr-code-full-region';
 
-  // a reference to a code
+
   const ref = useRef<Html5QrcodeScanner | boolean>(false);
 
   useEffect(() => {
@@ -35,7 +35,7 @@ export const QrScanner = ({ onScanSuccess, onScanError }: Props) => {
     html5QrcodeScanner.render(
       // when success
       (decodedText, decodedResult) => {
-        // decodedText is our qr lessonid!
+     
 
         // success, we stop scanning
         html5QrcodeScanner.clear();
@@ -59,7 +59,7 @@ export const QrScanner = ({ onScanSuccess, onScanError }: Props) => {
 
   return (
     <>
-      {/* we return it */}
+    
       <div id={qrcodeRegionId}></div>
     </>
   );

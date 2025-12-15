@@ -65,7 +65,7 @@ export default function AttendanceTable(params: any) {
                   <TableCell className="font-medium font-mono text-xs text-gray-500">{stud.studentId}</TableCell>
                   <TableCell>{stud.name}</TableCell>
                   <TableCell>
-                    {/* W-FIT TELLS THE P TO HAVE WIDTH THE SIZE OF TEXT NOT THE CELL! AMAZING! */}
+                 
                     <p className="bg-green-400 rounded  w-fit px-1 py-0.5 font-semibold ">{stud.status}</p>
                   </TableCell>
                   <TableCell className="text-right text-gray">

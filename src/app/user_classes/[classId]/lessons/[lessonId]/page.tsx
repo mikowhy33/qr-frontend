@@ -28,7 +28,7 @@ export default async function StronaGlowna({ params }: lessonType) {
     // he will be redirected to a special component which will send him to a homepage after 5 secs (user friendly info)
     if (data.role === 'student') {
       return <AccessDenied/>
-      // return redirect('/');
+
     }
   return (
     <>
@@ -38,14 +38,4 @@ export default async function StronaGlowna({ params }: lessonType) {
   );
 }
 
-/*
 
- const res = await fetch(API_URL, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      // cache: 'no-store' always fresh data
-      cache: 'no-store',
-
-*/

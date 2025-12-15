@@ -11,7 +11,7 @@ type Props = {
 export const StudentEnrollmentForm = ({ classId, showTheForm, fetchAllStudents }: Props) => {
   const [infoFromBackend, setInfoFromBackend] = useState<any>();
 
-  // fetching 1 time to get the data!
+  
   useEffect(() => {
     fetchAllStudents();
   }, []);
@@ -21,22 +21,7 @@ export const StudentEnrollmentForm = ({ classId, showTheForm, fetchAllStudents }
     const userName = formdData.get('usersname') as string;
     const userEmail = formdData.get('usersemail') as string;
 
-    // if we decide to move from new way of submitting, and want custom errors while field empty
-    // const requiredFields=['userID','usersname','usersemail']
-
-    // for(const req of requiredFields){
-    //   console.log(req)
-
-    //   const valueOfThatInput=formdData.get(req)
-
-    //   console.log(valueOfThatInput +'bzbz')
-    //   if(valueOfThatInput===""){
-    //     setEmptyInput(true)
-    //     console.log('test nie moze byc puste')
-    //     return;
-    //   }
-
-    // }
+   
 
     const data = await enrollStudent(classId, userId, userName, userEmail);
 
@@ -44,7 +29,7 @@ export const StudentEnrollmentForm = ({ classId, showTheForm, fetchAllStudents }
       throw new Error('Couldnt create the lesson');
     }
     setInfoFromBackend(data);
-    // refresh after enrolling a student
+   
     fetchAllStudents();
   };
 
@@ -58,23 +43,7 @@ export const StudentEnrollmentForm = ({ classId, showTheForm, fetchAllStudents }
           </button>
         </div>
         <form
-          // if we decide in future to go with old school
-          // onSubmit={(e) => {
-          //   e.preventDefault();
-
-          //   const formData = new FormData(e.currentTarget);
-
-          //   const userID = formData.get('userID') as string;
-
-          //   setUserId(userID);
-          //   setUserName(formData.get('usersname') as string);
-          //   setUserEmail(formData.get('usersemail') as string);
-
-          //   console.log(userId +'BZZ')
-
-          //   // console.log(e.target)
-          // }}
-
+          
           action={submitform}
         >
           <div className="flex flex-col gap-y-2">
@@ -110,8 +79,8 @@ export const StudentEnrollmentForm = ({ classId, showTheForm, fetchAllStudents }
 
             <button
               type="submit"
-              className=' className="w-full flex justify-center py-3 mt-2  border border-transparent text-sm font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700
-             focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-200 shadow-md hover:shadow-lg"'
+              className=" className=w-full flex justify-center py-3 mt-2  border border-transparent text-sm font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700
+             focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-200 shadow-md hover:shadow-lg"
             >
               Submit form
             </button>

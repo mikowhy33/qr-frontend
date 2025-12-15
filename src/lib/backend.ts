@@ -34,11 +34,11 @@ export async function backendFetch<T>(endpoint: string, options: RequestInit = {
     });
 
     if (!res.ok) {
-      // We try to get info from backend
+      
       let errorMessage = `Backend error: ${res.status}`;
       try {
         const errorBody = await res.json();
-        // First message then error then default
+       
         errorMessage = errorBody.message || errorBody.error || errorMessage;
       } catch (e) {}
       console.error(`[BackendFetch] Error ${res.status}: ${errorMessage}`);

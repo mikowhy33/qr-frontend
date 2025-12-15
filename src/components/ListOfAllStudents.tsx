@@ -12,12 +12,11 @@ export const ListOfAllStudents = ({listOfAllStudentsInDataBase}:Props) => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const filteredList = listOfAllStudentsInDataBase?.filter((student) => {
-    // empty=show all
+   
     if (searchTerm === '') return true;
 
     const searchLower = searchTerm.toLowerCase();
 
-    // checking if email/id/name has the text
     return (
       student.name.toLowerCase().includes(searchLower) ||
       student.email.toLowerCase().includes(searchLower) ||

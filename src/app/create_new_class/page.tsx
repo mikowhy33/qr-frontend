@@ -8,7 +8,7 @@ const CreateNewClass = async () => {
 
   if (!data) {
    
-   // no data redirect to homepage 
+ 
     return redirect('/');
   }
 
@@ -16,7 +16,7 @@ const CreateNewClass = async () => {
   // he will be redirected to a special component which will send him to a homepage after 5 secs (user friendly info)
   if (data.role === 'student') {
     return <AccessDenied/>
-    // return redirect('/');
+
   }
 
   return <ClassCreationForm />;

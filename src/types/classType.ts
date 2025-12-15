@@ -75,3 +75,10 @@ export type SuccessResponseCreatedClass={
 export type SuccessResponseCreatedLesson={
   response:string;
 }
+
+export type Student={
+  id:string,
+  name:string,
+  email:string,
+  role:string
+}

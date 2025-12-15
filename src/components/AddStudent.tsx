@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { StudentEnrollForm } from './StudentEnrollForm';
 
+
 type Props = {
   classId: string;
 };
@@ -18,10 +19,15 @@ export const AddStudent = ({ classId }: Props) => {
               cursor-pointer hover:scale-105 transition-transform duration-300 bg-indigo-50/50 border border-indigo-100"
           onClick={() => setShowTheForm((prev) => !prev)}
         >
-          <strong className='my-auto'>Click to enroll students to this class</strong>
+          <strong className="my-auto">Click to enroll students to this class</strong>
         </button>
 
-        {showForm ? <StudentEnrollForm classId={classId} showTheForm={setShowTheForm}></StudentEnrollForm> : null}
+        {showForm && (
+          <>
+            <StudentEnrollForm classId={classId} showTheForm={setShowTheForm}></StudentEnrollForm>
+           
+          </>
+        )}
       </div>
     </>
   );

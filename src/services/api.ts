@@ -10,6 +10,7 @@ import {
   LessonAttendance,
   lessonAttendanceStart,
   lessonInfo,
+  Student,
   SuccessResponseCreatedClass,
   SuccessResponseCreatedLesson,
   userInfo,
@@ -142,3 +143,14 @@ export const enrollStudent = async (classId: string, userId: string, name: strin
 
   return data;
 };
+
+
+export const getAllStudents=async ()=>{
+
+  const data =await backendFetch<Student[]|null>(`/api/users/students`);
+
+  if(!data) return null;
+
+  return data;
+
+}

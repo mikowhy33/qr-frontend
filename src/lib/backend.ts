@@ -8,8 +8,9 @@ const BACKEND_URL = 'http://localhost:3000';
 // options by default a {}
 // RequestInit is a type containing all possible setting we can parse to a fetch, it can have get, post body, headers etc
 export async function backendFetch<T>(endpoint: string, options: RequestInit = {}): Promise<T | null> {
+  
+  
   // automated authorization, were getting the authentication object, and then we get a token out of it
-
   const authObj = await auth();
   const token = await authObj.getToken();
 
